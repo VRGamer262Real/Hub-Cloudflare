@@ -399,7 +399,7 @@
 
     <!-- HOME -->
     <section id="home" class="active">
-        <h1 class="rainbow-text">The Central Hub</h1>
+        <h1 class="rainbow-text">Our Hub</h1>
         
         <div class="widget-row">
             <div class="widget neon-border">
@@ -414,10 +414,7 @@
                 <div class="widget-label">Session Time</div>
                 <div class="widget-val" id="session-timer">00:00</div>
             </div>
-            <div class="widget">
-                <div class="widget-label">Local Weather</div>
-                <div class="widget-val" id="weather-val">72°F <span style="font-size: 0.8rem; color: #888;">Clear Skies</span></div>
-            </div>
+            
         </div>
 
         <ul class="grid">
@@ -1010,7 +1007,7 @@
         }
 
         // 3. TASKS & TOOLS
-        let tasks = JSON.parse(localStorage.getItem('hubTasks')) || [{t: "Explore the new Hub V8", c: false}];
+        let tasks = JSON.parse(localStorage.getItem('hubTasks')) || [{t: "Explore our new Hub", c: false}];
         function addTask() {
             const input = document.getElementById('new-task-input');
             if(!input.value) return;
