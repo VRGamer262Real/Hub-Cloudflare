@@ -27,6 +27,9 @@
             /* Auth Specific */
             --github-color: #24292e;
             --user-card-bg: rgba(255, 255, 255, 0.05);
+            /* New Variables */
+            --terminal-bg: rgba(0, 0, 0, 0.9);
+            --neon-shadow: 0 0 10px var(--primary);
         }
 
         /* 1. RESET & CORE */
@@ -61,6 +64,12 @@
             position: fixed; inset: 0; pointer-events: none; z-index: 9997;
             background: url('https://media.giphy.com/media/oEI9uWUic9VKM/giphy.gif');
             opacity: var(--glitch-opacity); mix-blend-mode: overlay;
+        }
+
+        /* MATRIX OVERLAY */
+        #matrix-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            opacity: 0; pointer-events: none; transition: opacity 1s;
         }
 
         #cursor {
@@ -265,10 +274,33 @@
         .feedback-chip { padding: 8px 15px; border-radius: 10px; background: rgba(255,255,255,0.05); font-size: 0.8rem; cursor: pointer; border: 1px solid transparent; }
         .feedback-chip.selected { border-color: var(--primary); background: rgba(0, 210, 255, 0.1); }
 
+        /* --- NEW EXTENDED STYLES --- */
+        .terminal-box {
+            background: var(--terminal-bg); color: var(--success); font-family: 'Fira Code', monospace;
+            padding: 20px; border-radius: 15px; border: 1px solid var(--success);
+            text-align: left; max-height: 400px; overflow-y: auto; font-size: 0.85rem;
+            box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+        .terminal-line { margin-bottom: 5px; }
+        .terminal-input-row { display: flex; gap: 10px; align-items: center; }
+        .terminal-input-row input { background: transparent; border: none; padding: 0; margin: 0; color: white; width: 100%; }
+
+        .floating-action {
+            position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+            width: 60px; height: 60px; background: var(--primary); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: black;
+            font-size: 1.5rem; box-shadow: 0 10px 30px var(--glow); transition: 0.3s;
+        }
+        .floating-action:hover { transform: scale(1.1) rotate(90deg); }
+
+        .neon-border { border: 1px solid var(--primary); box-shadow: 0 0 15px var(--glow); }
+        .rainbow-text { background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
         /* ANIMATIONS */
         @keyframes sectionIn { from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
         @keyframes itemUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes matrix { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
         
         .grid li:nth-child(n) { animation-delay: calc(0.06s * var(--i, 0)); }
 
@@ -281,12 +313,17 @@
     <div id="scanlines"></div>
     <div id="glitch-overlay"></div>
     <canvas id="particle-canvas"></canvas>
+    <canvas id="matrix-canvas"></canvas>
     <div id="bg-canvas"></div>
+
+    <!-- NEW SFX ELEMENTS -->
+    <audio id="sfx-click" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="sfx-hover" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
 
     <div id="loader">
         <div class="loader-logo">VRGamer262 and Z0cM</div>
         <div class="load-bar"><div class="load-progress" id="load-p"></div></div>
-        <div style="font-size: 0.6rem; margin-top: 10px; opacity: 0.4; letter-spacing: 2px;">INITIALIZING HUB ENGINE V8.0</div>
+        <div style="font-size: 0.6rem; margin-top: 10px; opacity: 0.4; letter-spacing: 2px;">INITIALIZING HUB ENGINE V9.0 PRO</div>
     </div>
 
     <!-- COMMAND PALETTE -->
@@ -296,11 +333,15 @@
             <div class="cmd-item" onclick="execCmd('goto home')">Go to Home</div>
             <div class="cmd-item" onclick="execCmd('theme reset')">Reset Theme</div>
             <div class="cmd-item" onclick="execCmd('toggle perf')">Toggle Performance Mode</div>
+            <div class="cmd-item" onclick="execCmd('toggle matrix')">Toggle Matrix Rain</div>
         </div>
     </div>
 
     <div id="cursor"></div>
     <div id="cursor-follower"></div>
+
+    <!-- FLOATING ACTION BUTTON -->
+    <div class="floating-action" onclick="toggleQuickMenu()">+</div>
 
     <!-- GAME THEATER MODAL -->
     <div id="game-view">
@@ -341,6 +382,7 @@
             <li><a onclick="showSec('music')" id="nav-music">Music</a></li>
             <li><a onclick="showSec('news')" id="nav-news">Changelog</a></li>
             <li><a onclick="showSec('tools')" id="nav-tools">Tools</a></li>
+            <li><a onclick="showSec('terminal')" id="nav-terminal">Terminal</a></li>
             <li><a onclick="showSec('models')" id="nav-models">3D</a></li>
             <li><a onclick="showSec('design')" id="nav-design">Lab</a></li>
             <li><a onclick="showSec('questions')" id="nav-questions">Feedback</a></li>
@@ -357,10 +399,10 @@
 
     <!-- HOME -->
     <section id="home" class="active">
-        <h1>Our Hub</h1>
+        <h1 class="rainbow-text">The Central Hub</h1>
         
         <div class="widget-row">
-            <div class="widget">
+            <div class="widget neon-border">
                 <div class="widget-label">Daily Quote</div>
                 <div class="widget-val" id="quote-box" style="font-size: 0.9rem; font-weight: 500;">"Having fun all day lol"</div>
             </div>
@@ -479,17 +521,17 @@
     <section id="news">
         <h1>Updates</h1>
         <div class="panel" style="text-align: left;">
+            <h2 style="color:var(--primary); margin-top:0;">V9.0 - The Terminal Expansion</h2>
+            <p>• <strong>System Terminal</strong>: New interactive console for power users.</p>
+            <p>• <strong>Anti-Close Protection</strong>: Never lose your work again.</p>
+            <p>• <strong>Morse & Currency Tools</strong>: Added deeper utility tools.</p>
+            <p>• <strong>Matrix Mode</strong>: Added visual rain effects for a deeper vibe.</p>
+        </div>
+        <div class="panel" style="text-align: left;">
             <h2 style="color:var(--primary); margin-top:0;">V8.1 - The Identity Patch</h2>
             <p>• <strong>GitHub Integration</strong>: Sign in to sync your tasks and notes across sessions.</p>
             <p>• <strong>Enhanced Feedback</strong>: Improved reporting system with categorized issue tracking.</p>
             <p>• <strong>User Profile</strong>: New dedicated section to manage your Hub account.</p>
-        </div>
-        <div class="panel" style="text-align: left;">
-            <h2 style="color:var(--primary); margin-top:0;">V8.0 - The Command Update</h2>
-            <p>• <strong>Command Palette</strong>: Press <code>Ctrl+K</code> to open the instant action bar.</p>
-            <p>• <strong>Hub Task Manager</strong>: New persistent to-do list in the Apps section.</p>
-            <p>• <strong>Glitch Engine</strong>: Added CRT and Glitch visual overlays in the Lab.</p>
-            <p>• <strong>Theater Plus</strong>: New widescreen toggle for the internal game player.</p>
         </div>
     </section>
 
@@ -501,6 +543,7 @@
             <li><div class="card" onclick="genPass()"><span class="card-text">Password Generator</span></div></li>
             <li><div class="card" onclick="showUnitConverter()"><span class="card-text">Unit Converter</span></div></li>
             <li><div class="card" onclick="copySystemInfo()"><span class="card-text">Copy System Info</span></div></li>
+            <li><div class="card" onclick="showMorse()"><span class="card-text">Morse Code</span></div></li>
             <li><div class="card" onclick="execCmd('b64')"><span class="card-text">Base64 Converter</span></div></li>
         </ul>
         <div id="tool-out" style="text-align:center; margin-top: 30px; font-weight: bold; color: var(--primary); font-family: 'Fira Code';"></div>
@@ -519,6 +562,28 @@
                 </select>
             </div>
             <h2 id="unit-result" style="color:var(--primary)">0.00</h2>
+        </div>
+
+        <div id="morse-panel" class="panel" style="display:none; margin-top: 40px;">
+            <h3>Morse Translator</h3>
+            <input type="text" id="morse-input" placeholder="Text to Morse..." oninput="translateMorse()">
+            <h2 id="morse-result" style="color:var(--primary); word-break: break-all; font-family: 'Fira Code';">.... ..</h2>
+        </div>
+    </section>
+
+    <!-- TERMINAL (NEW) -->
+    <section id="terminal">
+        <h1>System Terminal</h1>
+        <div class="panel">
+            <div class="terminal-box" id="terminal-display">
+                <div class="terminal-line">Hub OS v9.0.0 Loading...</div>
+                <div class="terminal-line">Copyright (c) 2026 VRGamer262 & zOcM.</div>
+                <div class="terminal-line">Type 'help' for available commands.</div>
+            </div>
+            <div class="terminal-input-row" style="margin-top: 15px;">
+                <span style="color: var(--success); font-weight: 900;">guest@hub:~$</span>
+                <input type="text" id="term-input" autofocus onkeyup="handleTerminal(event)">
+            </div>
         </div>
     </section>
 
@@ -561,6 +626,7 @@
                 <button class="btn" onclick="toggleScanlines()">Cyber Scanlines</button>
                 <button class="btn" style="background:var(--secondary)" onclick="toggleRGBPulse()">RGB Pulse</button>
                 <button class="btn" style="background:var(--accent)" onclick="toggleGlitch()">Glitch Mode</button>
+                <button class="btn" style="background:var(--success); color: black;" onclick="toggleMatrix()">Matrix Rain</button>
                 <button class="btn" id="perf-toggle-btn" onclick="togglePerfMode()">Performance: OFF</button>
             </div>
         </div>
@@ -692,6 +758,51 @@
         let currentUser = JSON.parse(localStorage.getItem('hubUser')) || null;
         let activeIssueType = 'Bug';
 
+        // --- NEW MATRIX RAIN LOGIC ---
+        const mCanvas = document.getElementById('matrix-canvas');
+        const mCtx = mCanvas.getContext('2d');
+        let mLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$@#%";
+        mLetters = mLetters.split("");
+        let mFontSize = 14;
+        let mColumns;
+        let mDrops = [];
+        let isMatrix = false;
+
+        function initMatrix() {
+            mCanvas.width = window.innerWidth;
+            mCanvas.height = window.innerHeight;
+            mColumns = mCanvas.width / mFontSize;
+            mDrops = [];
+            for (let i = 0; i < mColumns; i++) mDrops[i] = 1;
+        }
+
+        function drawMatrix() {
+            if(!isMatrix) return;
+            mCtx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+            mCtx.fillStyle = "#0F0";
+            mCtx.font = mFontSize + "px Fira Code";
+            for (let i = 0; i < mDrops.length; i++) {
+                let text = mLetters[Math.floor(Math.random() * mLetters.length)];
+                mCtx.fillText(text, i * mFontSize, mDrops[i] * mFontSize);
+                if (mDrops[i] * mFontSize > mCanvas.height && Math.random() > 0.975) mDrops[i] = 0;
+                mDrops[i]++;
+            }
+            requestAnimationFrame(drawMatrix);
+        }
+
+        function toggleMatrix() {
+            isMatrix = !isMatrix;
+            mCanvas.style.opacity = isMatrix ? "1" : "0";
+            if(isMatrix) { initMatrix(); drawMatrix(); }
+        }
+
+        // --- ANTI-CLOSE PROTECTION ---
+        window.addEventListener('beforeunload', (e) => {
+            e.preventDefault();
+            e.returnValue = 'Hub Protection: Unsaved progress may be lost. Are you sure?';
+        });
+
         function updateFX(type, val) {
             if(type === 'count') { fxConfig.count = parseInt(val); initParticles(); }
             if(type === 'speed') fxConfig.speed = val / 20;
@@ -778,6 +889,7 @@
             initParticles(); drawParticles();
             renderTasks();
             syncAuthUI();
+            updateGreeting();
             let p = 0;
             const int = setInterval(() => {
                 p += Math.random() * 40;
@@ -791,6 +903,7 @@
 
         // 2. NAVIGATION & COMMANDS
         function showSec(id) {
+            playSfx('click');
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
@@ -816,12 +929,46 @@
             }
             if(cmd.startsWith('theme ')) document.documentElement.style.setProperty('--primary', cmd.replace('theme ', ''));
             if(cmd === 'toggle perf') togglePerfMode();
+            if(cmd === 'toggle matrix') toggleMatrix();
             if(cmd === 'login') handleAuthClick();
+            if(cmd === 'panic') panicMode();
             if(cmd === 'b64') {
                 const text = prompt("Enter text to Base64 encode:");
                 if(text) alert("Encoded: " + btoa(text));
             }
-            if(cmd === 'help') alert("Commands: goto [sec], theme [color], theme reset, toggle perf, b64, login");
+            if(cmd === 'help') alert("Commands: goto [sec], theme [color], theme reset, toggle perf, toggle matrix, b64, panic, login");
+        }
+
+        // --- NEW TERMINAL LOGIC ---
+        function handleTerminal(e) {
+            if(e.key === 'Enter') {
+                const input = document.getElementById('term-input');
+                const val = input.value.trim().toLowerCase();
+                const display = document.getElementById('terminal-display');
+                
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+                line.innerHTML = `<span style="color:white">> ${input.value}</span>`;
+                display.appendChild(line);
+
+                let output = "";
+                if(val === 'help') output = "Available: clear, date, whoami, version, status, echo [text]";
+                else if(val === 'clear') { display.innerHTML = ""; output = "Terminal cleared."; }
+                else if(val === 'date') output = new Date().toString();
+                else if(val === 'whoami') output = currentUser ? currentUser.username : "guest_user_8492";
+                else if(val === 'version') output = "Hub Engine v9.0.0-pro-stable";
+                else if(val === 'status') output = "All systems operational. Particles: Stable. Glitch: Idle.";
+                else if(val.startsWith('echo ')) output = input.value.substring(5);
+                else output = "Command not recognized. Type 'help'.";
+
+                const res = document.createElement('div');
+                res.className = 'terminal-line';
+                res.innerText = output;
+                display.appendChild(res);
+                
+                input.value = "";
+                display.scrollTop = display.scrollHeight;
+            }
         }
 
         function openGame(url, name) {
@@ -933,6 +1080,15 @@
             document.getElementById('unit-result').innerText = isNaN(res) ? "0.00" : res.toFixed(2);
         }
 
+        // --- NEW MORSE LOGIC ---
+        function showMorse() { document.getElementById('morse-panel').style.display = 'block'; window.scrollTo(0, document.body.scrollHeight); }
+        function translateMorse() {
+            const charMap = {'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.', 'g': '--.', 'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 't': '-', 'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-', 'y': '-.--', 'z': '--..', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----', ' ': '/'};
+            const input = document.getElementById('morse-input').value.toLowerCase();
+            const res = input.split('').map(c => charMap[c] || '').join(' ');
+            document.getElementById('morse-result').innerText = res || '.... ..';
+        }
+
         function downloadNotes() {
             const blob = new Blob([document.getElementById('note').value], {type: 'text/plain'});
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hub-notes.txt'; a.click();
@@ -944,7 +1100,7 @@
         }
 
         function copySystemInfo() {
-            const info = `Platform: ${navigator.platform} | Resolution: ${screen.width}x${screen.height} | Hub Version: 8.0`;
+            const info = `Platform: ${navigator.platform} | Resolution: ${screen.width}x${screen.height} | Hub Version: 9.0`;
             navigator.clipboard.writeText(info);
             document.getElementById('tool-out').innerText = "System info copied!";
         }
@@ -953,6 +1109,12 @@
             const p = document.getElementById('player'); p.src = src; p.play();
             const t = document.getElementById('toast'); t.innerText = "Playing: " + name;
             t.style.bottom = "40px"; setTimeout(() => t.style.bottom = "-100px", 4000);
+        }
+
+        function playSfx(id) {
+            if(isPerfMode) return;
+            const s = document.getElementById('sfx-' + id);
+            if(s) { s.currentTime = 0; s.volume = 0.2; s.play(); }
         }
 
         // 4. AUTH & FEEDBACK LOGIC
@@ -1073,6 +1235,15 @@
             if(!u) bg.style.backgroundImage = "radial-gradient(circle at 50% 50%, #111 0%, #000 100%)";
             else bg.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${u}')`; 
         }
+
+        function updateGreeting() {
+            const h = new Date().getHours();
+            let g = "Welcome back!";
+            if(h < 12) g = "Good morning, explorer.";
+            else if(h < 18) g = "Good afternoon, developer.";
+            else g = "Good evening, gamer.";
+            document.getElementById('greeting').innerText = g;
+        }
         
         function cloak() {
             let w = window.open('about:blank', '_blank');
@@ -1080,22 +1251,34 @@
             window.location.replace("https://google.com");
         }
 
+        function panicMode() {
+            mask('Google', 'https://google.com/favicon.ico');
+            window.location.href = "https://google.com";
+        }
+
         function refresh() {
             document.querySelectorAll('a, button, .card, input, textarea, select').forEach(el => {
-                el.onmouseenter = () => { if(!isPerfMode) document.body.classList.add('cursor-hover'); };
+                el.onmouseenter = () => { playSfx('hover'); if(!isPerfMode) document.body.classList.add('cursor-hover'); };
                 el.onmouseleave = () => { if(!isPerfMode) document.body.classList.remove('cursor-hover'); };
             });
         }
         
+        function toggleQuickMenu() {
+            const p = document.getElementById('cmd-palette');
+            p.classList.toggle('active');
+            if(p.classList.contains('active')) document.getElementById('cmd-input').focus();
+        }
+
         document.getElementById('note').value = localStorage.getItem('hubNote') || "";
         document.addEventListener('keydown', (e) => {
             if(e.key === '`') window.location.href = "about:blank";
+            if(e.key === 'b' || e.key === 'B') panicMode(); // PANIC KEY
             if(e.key === 'Escape') { closeGame(); document.getElementById('cmd-palette').classList.remove('active'); }
             if(e.ctrlKey && e.key === 'k') { e.preventDefault(); document.getElementById('cmd-palette').classList.add('active'); document.getElementById('cmd-input').focus(); }
             if(e.key === '/') { if(document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') { e.preventDefault(); document.getElementById('universalSearch').focus(); }}
         });
 
-        const quotes = ["Innovate or die.", "Coding the future.", "Pixels are power.", "Hub is home.", "Efficiency is key.", "Stay modular."];
+        const quotes = ["Innovate or die.", "Coding the future.", "Pixels are power.", "Hub is home.", "Efficiency is key.", "Stay modular.", "Break the simulation."];
         document.getElementById('quote-box').innerText = `"${quotes[Math.floor(Math.random()*quotes.length)]}"`;
         
         // Final Init
