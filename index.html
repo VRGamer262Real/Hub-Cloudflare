@@ -1,1548 +1,1109 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cyber">
+<html lang="en">
 <head>
     <!-- 
-        ULTRA HUB V10.0 - THE DEFINITIVE EDITION
-        AUTHORS: ZOCMYT & VRGAMER262
-        LICENSE: MIT / OPEN SOURCE 2026
+        ========================================================================
+        ULTRA HUB OS - VERSION 10.5.2 (MASTER BRANCH)
+        DEVELOPED BY: VRGamer262 & zOcM
+        OBJECTIVE: HIGH-PERFORMANCE GAMING & PRODUCTIVITY NEXUS
+        ========================================================================
     -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Ultimate Gaming and Productivity Nexus">
-    <title id="tab-title">ZOCMYT & VRGamer262 - Hub</title>
+    <meta name="theme-color" content="#00d2ff">
+    <title id="tab-title">ZOCMYT & VRGamer262 - Ultra Hub</title>
     
-    <!-- FAVICON -->
+    <!-- FAVICON (DYNAMICRAIN) -->
     <link id="tab-icon" rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/c/cc/Digital_rain_animation_medium_letters_shine.gif">
 
-    <!-- FONTS -->
+    <!-- FONT INJECTION -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800;900&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600;700;900&family=Fira+Code:wght@400;500;700&family=JetBrains+Mono:wght@400;800&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* 
-        ========================================
-        1. ROOT & VARIABLES (THEMING SYSTEM)
-        ========================================
+        ------------------------------------------------------------------------
+        1. ROOT ARCHITECTURE & GLOBAL TOKENS
+        ------------------------------------------------------------------------
         */
         :root {
-            --primary: #00f2ff;
-            --primary-glow: rgba(0, 242, 255, 0.5);
-            --secondary: #7000ff;
-            --secondary-glow: rgba(112, 0, 255, 0.4);
-            --accent: #ff0055;
-            --accent-glow: rgba(255, 0, 85, 0.4);
+            /* Core Colors */
+            --primary: #00d2ff;
+            --primary-glow: rgba(0, 210, 255, 0.5);
+            --secondary: #9d50bb;
+            --secondary-glow: rgba(157, 80, 187, 0.4);
+            --accent: #ff4b2b;
+            --accent-glow: rgba(255, 75, 43, 0.4);
             --success: #00ff88;
             --warning: #ffcc00;
             --danger: #ff3333;
             
-            --bg-deep: #050505;
-            --bg-card: rgba(15, 15, 15, 0.7);
-            --bg-glass: rgba(20, 20, 20, 0.4);
+            /* Background Tokens */
+            --bg-deep: #010101;
+            --bg-card: rgba(15, 17, 20, 0.7);
+            --bg-glass: rgba(10, 12, 11, 0.75);
+            --border: rgba(255, 255, 255, 0.12);
+            --glow: rgba(0, 210, 255, 0.4);
             
-            --border-light: rgba(255, 255, 255, 0.1);
-            --border-neon: rgba(0, 242, 255, 0.3);
-            
-            --text-main: #e0e0e0;
-            --text-dim: #888888;
-            --text-bright: #ffffff;
-            
-            --blur-standard: 15px;
-            --blur-heavy: 40px;
-            
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-mid: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            --transition-slow: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-            
+            /* Typography Tokens */
             --font-main: 'Inter', sans-serif;
-            --font-title: 'Space Grotesk', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-display: 'Syne', sans-serif;
-
-            --z-bg: -10;
-            --z-particles: -5;
-            --z-content: 10;
-            --z-nav: 100;
-            --z-overlay: 1000;
-            --z-loader: 10000;
-            --z-cursor: 99999;
-        }
-
-        [data-theme="neon"] {
-            --primary: #ff00ff;
-            --primary-glow: rgba(255, 0, 255, 0.5);
-            --secondary: #00ffff;
-            --bg-deep: #0a001a;
-        }
-
-        [data-theme="matrix"] {
-            --primary: #00ff41;
-            --primary-glow: rgba(0, 255, 65, 0.5);
-            --secondary: #003b00;
-            --bg-deep: #000000;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --font-cyber: 'Syne', sans-serif;
+            
+            /* Visual Effect Tokens */
+            --blur-val: 20px;
+            --glow-spread: 25px;
+            --card-scale: 1.05;
+            --glitch-opacity: 0;
+            --terminal-bg: rgba(5, 5, 5, 0.95);
+            --neon-shadow: 0 0 15px var(--primary);
+            --panel-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+            
+            /* Auth / Social Colors */
+            --github-color: #24292e;
+            --user-card-bg: rgba(255, 255, 255, 0.05);
         }
 
         /* 
-        ========================================
-        2. RESET & BASE STYLES
-        ========================================
+        ------------------------------------------------------------------------
+        2. KERNEL STYLES (RESET & BASE)
+        ------------------------------------------------------------------------
         */
-        * {
-            margin: 0;
+        * { 
+            cursor: none !important; 
+            box-sizing: border-box; 
+            outline: none; 
+            margin: 0; 
             padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            cursor: none !important;
+            -webkit-tap-highlight-color: transparent; 
         }
-
-        html, body {
-            width: 100%;
-            min-height: 100vh;
+        
+        body {
             background-color: var(--bg-deep);
-            color: var(--text-main);
+            color: #e0e0e0; 
             font-family: var(--font-main);
-            overflow-x: hidden;
+            overflow-x: hidden; 
+            min-height: 100vh; 
             scroll-behavior: smooth;
         }
 
-        body::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        body::-webkit-scrollbar-track {
-            background: var(--bg-deep);
-        }
-
-        body::-webkit-scrollbar-thumb {
-            background: linear-gradient(var(--primary), var(--secondary));
-            border-radius: 10px;
-        }
-
         /* 
-        ========================================
-        3. BACKGROUND & PARTICLES
-        ========================================
+        ------------------------------------------------------------------------
+        3. VISUAL ENGINE LAYERS
+        ------------------------------------------------------------------------
         */
-        #bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: var(--z-bg);
-            background: radial-gradient(circle at center, #111 0%, #000 100%);
-            overflow: hidden;
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background: radial-gradient(circle at 50% 50%, #0d0d0d 0%, #000 100%);
+            background-size: cover; background-position: center;
+            transition: background 1s ease, transform 0.3s ease-out;
         }
 
         #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: var(--z-particles);
-            pointer-events: none;
-            opacity: 0.6;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            opacity: 0.8; pointer-events: none;
         }
 
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.1) 50%
-            ), linear-gradient(
-                90deg, 
-                rgba(255, 0, 0, 0.03), 
-                rgba(0, 255, 0, 0.01), 
-                rgba(0, 0, 255, 0.03)
-            );
-            background-size: 100% 4px, 3px 100%;
-            z-index: 1000;
-            pointer-events: none;
+        #scanlines {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 2px 100%; display: none;
+        }
+
+        #glitch-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9997;
+            background: url('https://media.giphy.com/media/oEI9uWUic9VKM/giphy.gif');
+            opacity: var(--glitch-opacity); mix-blend-mode: overlay;
+        }
+
+        #matrix-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            opacity: 0; pointer-events: none; transition: opacity 1.5s ease;
         }
 
         /* 
-        ========================================
-        4. CUSTOM CURSOR
-        ========================================
+        ------------------------------------------------------------------------
+        4. CUSTOM INTERFACE (CURSOR & LOADER)
+        ------------------------------------------------------------------------
         */
-        #cursor-dot {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: var(--z-cursor);
-            transition: transform 0.1s;
-            box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+        #cursor {
+            width: 10px; height: 10px; background: var(--primary);
+            border-radius: 50%; position: fixed; pointer-events: none;
+            z-index: 10000; transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s;
+            box-shadow: 0 0 25px var(--primary), 0 0 50px var(--primary);
         }
 
-        #cursor-ring {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: var(--z-cursor);
-            transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
-            mix-blend-mode: difference;
+        #cursor-follower {
+            width: 45px; height: 45px; border: 1.5px solid var(--primary);
+            border-radius: 50%; position: fixed; pointer-events: none;
+            z-index: 9999; transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0.4; background: radial-gradient(circle, var(--glow) 0%, transparent 75%);
         }
 
-        .cursor-active #cursor-ring {
-            width: 60px;
-            height: 60px;
-            border-color: var(--accent);
-            background: rgba(255, 0, 85, 0.1);
+        .cursor-hover #cursor { 
+            transform: scale(4.5); 
+            background: rgba(0, 210, 255, 0.2); 
+            border: 1px solid var(--primary); 
+            mix-blend-mode: normal; 
         }
 
-        /* 
-        ========================================
-        5. LOADER SCREEN
-        ========================================
-        */
         #loader {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            z-index: var(--z-loader);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 1s ease, visibility 1s;
+            position: fixed; inset: 0; background: #000; z-index: 20000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 1.2s cubic-bezier(0.85, 0, 0.15, 1);
         }
 
-        .loader-content {
-            text-align: center;
-            width: 300px;
+        .loader-logo { 
+            font-family: var(--font-display); font-size: 3.5rem; font-weight: 700; 
+            letter-spacing: -3px; margin-bottom: 25px; text-shadow: 0 0 40px var(--glow); 
+            animation: loaderPulse 2.5s infinite; 
         }
 
-        .loader-title {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: pulse 2s infinite;
+        .load-bar { 
+            width: 300px; height: 3px; background: rgba(255,255,255,0.03); 
+            border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); 
         }
 
-        .loader-bar-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        #loader-progress {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            box-shadow: 0 0 15px var(--primary);
-            transition: width 0.3s;
-        }
-
-        .loader-status {
-            margin-top: 15px;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .load-progress { 
+            width: 0%; height: 100%; 
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent)); 
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
         }
 
         /* 
-        ========================================
-        6. LAYOUT COMPONENTS
-        ========================================
+        ------------------------------------------------------------------------
+        5. SYSTEM NAVIGATION (TOP & CENTER)
+        ------------------------------------------------------------------------
         */
         .status-bar {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            z-index: var(--z-nav);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-dim);
+            display: flex; justify-content: space-between; padding: 18px 45px;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(30px);
+            font-size: 0.75rem; font-weight: 800; color: rgba(255,255,255,0.7);
+            letter-spacing: 1.5px; border-bottom: 1px solid var(--border); z-index: 1001;
+            position: sticky; top: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .search-area { max-width: 800px; margin: 50px auto; padding: 0 25px; position: relative; }
+        .search-area input {
+            width: 100%; padding: 25px 40px; border-radius: 25px;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            color: white; font-size: 1.2rem; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            backdrop-filter: blur(25px); box-shadow: var(--panel-shadow);
+        }
+        .search-area input:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 60px var(--glow), inset 0 0 15px rgba(255,255,255,0.05); 
+            transform: scale(1.03); 
         }
 
-        .status-pill {
-            padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-            border: 1px solid var(--border-light);
+        .nav-wrapper { position: sticky; top: 75px; z-index: 1000; display: flex; justify-content: center; padding: 0 25px; }
+        .nav {
+            list-style: none; margin: 0; padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+            background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(45px); border-radius: 100px; border: 1px solid var(--border);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
         }
-
-        .status-pill span {
-            color: var(--primary);
-            font-weight: 700;
+        .nav li a {
+            color: #999; text-decoration: none; padding: 14px 26px; font-weight: 800; font-size: 0.75rem;
+            text-transform: uppercase; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 100px; letter-spacing: 2px;
         }
-
-        .main-nav {
-            position: sticky;
-            top: 60px;
-            width: fit-content;
-            margin: 20px auto;
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            padding: 8px;
-            border-radius: 100px;
-            border: 1px solid var(--border-light);
-            z-index: var(--z-nav);
-            display: flex;
-            gap: 5px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .nav-btn {
-            padding: 10px 24px;
-            border-radius: 100px;
-            border: none;
-            background: transparent;
-            color: var(--text-dim);
-            font-family: var(--font-main);
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition-mid);
-            text-decoration: none;
-        }
-
-        .nav-btn:hover {
-            color: var(--text-bright);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-btn.active {
-            background: var(--primary);
-            color: #000;
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
+        .nav li a:hover, .nav li a.active { color: #000; background: var(--primary); box-shadow: 0 0 30px var(--glow); transform: translateY(-3px); }
 
         /* 
-        ========================================
-        7. SECTIONS & CARDS
-        ========================================
+        ------------------------------------------------------------------------
+        6. CORE CONTENT LAYOUTS
+        ------------------------------------------------------------------------
         */
-        section {
-            display: none;
-            padding: 40px 20px 100px;
-            max-width: 1400px;
-            margin: 0 auto;
-            min-height: 80vh;
+        section { display: none; opacity: 0; padding: 80px 30px 180px; min-height: 90vh; }
+        section.active { display: block; animation: sectionReveal 1s forwards cubic-bezier(0.23, 1, 0.32, 1); }
+
+        h1 { 
+            text-align: center; font-size: 5.5rem; margin-bottom: 60px; font-family: var(--font-display); 
+            font-weight: 900; letter-spacing: -4px; 
+            background: linear-gradient(180deg, #fff 40%, rgba(255,255,255,0.1) 100%); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
         }
 
-        section.active {
-            display: block;
-            animation: fadeIn 0.6s ease-out;
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 35px; max-width: 1500px; margin: 0 auto; list-style: none; padding: 0;
         }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 4.5rem;
-            font-weight: 900;
-            letter-spacing: -4px;
-            margin-bottom: 10px;
-            line-height: 1;
-            background: linear-gradient(180deg, #fff 0%, #444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .section-subtitle {
-            font-family: var(--font-mono);
-            color: var(--primary);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
+        .grid li { opacity: 0; transform: translateY(40px); }
+        section.active li { animation: slideUpFade 0.7s forwards; }
 
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 24px;
-            transition: var(--transition-mid);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
+            display: flex; flex-direction: column; align-items: center; text-decoration: none;
+            color: white; background: var(--bg-glass); padding: 35px; border-radius: 40px;
+            border: 1px solid var(--border); transition: 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            height: 100%; text-align: center; backdrop-filter: blur(var(--blur-val)); position: relative; overflow: hidden;
+            box-shadow: var(--panel-shadow);
         }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--primary-glow);
+        .card::before {
+            content: ''; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+            transition: 0.8s ease; pointer-events: none;
         }
-
-        .card-img {
-            width: 100%;
-            height: 180px;
-            border-radius: 16px;
-            object-fit: cover;
-            margin-bottom: 20px;
-            background: #1a1a1a;
-            border: 1px solid var(--border-light);
+        .card:hover { 
+            transform: translateY(-20px) scale(var(--card-scale)); border-color: var(--primary); 
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 var(--glow-spread) var(--glow); 
+            background: rgba(255,255,255,0.1); 
         }
-
-        .card-tag {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: 700;
+        .card img { 
+            width: 100%; height: 180px; object-fit: cover; border-radius: 28px; 
+            margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 1px solid var(--border); 
         }
+        .card-text { font-weight: 800; font-size: 1.2rem; letter-spacing: 0.5px; opacity: 0.95; font-family: var(--font-display); }
 
-        .card-title {
-            font-family: var(--font-title);
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-bright);
-            margin-bottom: 10px;
+        .panel {
+            max-width: 950px; margin: 40px auto; background: var(--bg-glass);
+            padding: 60px; border-radius: 50px; border: 1px solid var(--border);
+            text-align: center; backdrop-filter: blur(var(--blur-val)); box-shadow: 0 50px 120px rgba(0,0,0,0.8);
+            position: relative; transition: 0.5s;
         }
+        .panel h3 { margin-top: 0; font-family: var(--font-display); font-size: 2.2rem; color: var(--primary); font-weight: 700; letter-spacing: -1px; }
+        
+        .btn { 
+            background: var(--primary); border: none; color: #000; padding: 22px 55px; border-radius: 100px; 
+            font-weight: 900; text-transform: uppercase; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            letter-spacing: 2px; cursor: pointer; border: 2px solid transparent; 
+        }
+        .btn:hover { transform: translateY(-8px); box-shadow: 0 25px 50px var(--glow); filter: brightness(1.15); border-color: white; }
+        .btn:active { transform: scale(0.92); }
 
-        .card-desc {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-            line-height: 1.5;
+        /* 
+        ------------------------------------------------------------------------
+        7. WIDGETS & DASHBOARD COMPONENTS
+        ------------------------------------------------------------------------
+        */
+        .widget-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; max-width: 1400px; margin: 0 auto 50px auto; }
+        .widget { 
+            background: var(--bg-glass); padding: 30px; border-radius: 35px; border: 1px solid var(--border); 
+            backdrop-filter: blur(15px); transition: 0.4s; position: relative; overflow: hidden; 
+        }
+        .widget:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .widget-val { font-size: 2rem; font-weight: 900; color: var(--primary); font-family: var(--font-mono); }
+        .widget-label { font-size: 0.75rem; text-transform: uppercase; opacity: 0.6; letter-spacing: 2px; font-weight: 700; margin-bottom: 10px; display: block; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; max-width: 1400px; margin: 0 auto 50px; }
+        .calendar-widget { background: rgba(255,255,255,0.02); border-radius: 40px; padding: 30px; border: 1px solid var(--border); backdrop-filter: blur(20px); }
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; font-weight: 900; color: var(--primary); font-family: var(--font-display); font-size: 1.2rem; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; }
+        .cal-day { font-size: 0.8rem; opacity: 0.4; font-weight: 900; padding: 10px 0; }
+        .cal-num { padding: 12px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .cal-num:hover { background: var(--primary); color: black; transform: scale(1.1); }
+        .cal-num.today { background: var(--accent); color: white; box-shadow: 0 0 20px var(--accent-glow); }
+
+        .terminal-box {
+            background: var(--terminal-bg); color: var(--success); font-family: var(--font-mono);
+            padding: 30px; border-radius: 25px; border: 1px solid rgba(0, 255, 136, 0.3);
+            text-align: left; max-height: 500px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6;
+            box-shadow: inset 0 0 30px rgba(0, 255, 136, 0.05);
         }
 
         /* 
-        ========================================
-        8. HOME SCREEN SPECIAL WIDGETS
-        ========================================
+        ------------------------------------------------------------------------
+        8. THEATER MODE (GAME OVERLAY)
+        ------------------------------------------------------------------------
         */
-        .home-layout {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 50px;
+        #game-view {
+            position: fixed; inset: 0; z-index: 5000; background: #000;
+            display: none; flex-direction: column; opacity: 0; transition: 0.5s;
         }
-
-        .hero-panel {
-            background: linear-gradient(135deg, rgba(112, 0, 255, 0.1), rgba(0, 242, 255, 0.1));
-            border: 1px solid var(--border-neon);
-            border-radius: 32px;
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+        #game-view.active { display: flex; opacity: 1; }
+        #game-frame { border: none; width: 100%; height: 100%; flex-grow: 1; border: 1px solid var(--border); transition: 0.3s ease; }
+        .game-bar {
+            padding: 20px 40px; background: rgba(10,10,10,0.9); backdrop-filter: blur(30px);
+            border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;
         }
-
-        .hero-panel::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: var(--primary);
-            filter: blur(150px);
-            opacity: 0.1;
-            pointer-events: none;
+        .game-btn { 
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white;
+            padding: 12px 20px; border-radius: 15px; font-weight: 800; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s;
         }
-
-        .hero-title {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 0.9;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .hero-text {
-            max-width: 500px;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: var(--text-dim);
-            margin-bottom: 35px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-primary {
-            padding: 16px 32px;
-            background: var(--primary);
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition-mid);
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px var(--primary-glow);
-        }
-
-        .stats-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .stat-widget {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 20px;
-        }
-
-        .stat-label {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .stat-value {
-            font-family: var(--font-title);
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .task-list {
-            margin-top: 15px;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            color: var(--text-dim);
-        }
-
-        .task-item input {
-            accent-color: var(--primary);
-        }
+        .game-btn:hover { background: var(--primary); color: black; box-shadow: 0 0 20px var(--glow); transform: translateY(-3px); }
 
         /* 
-        ========================================
-        9. STOPWATCH & UTILITIES
-        ========================================
+        ------------------------------------------------------------------------
+        9. ANIMATION KERNEL
+        ------------------------------------------------------------------------
         */
-        .utility-panel {
-            background: var(--bg-card);
-            border-radius: 32px;
-            border: 1px solid var(--border-light);
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 30px;
+        @keyframes sectionReveal { 
+            from { opacity: 0; transform: translateY(60px) scale(0.98); filter: blur(15px); } 
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } 
+        }
+        @keyframes slideUpFade { 
+            from { opacity: 0; transform: translateY(40px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes loaderPulse { 
+            0%, 100% { opacity: 1; transform: scale(1); } 
+            50% { opacity: 0.6; transform: scale(0.98); } 
+        }
+        @keyframes rainbowMove { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+        
+        .rainbow-text { 
+            background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            background-size: 400% 400%; animation: rainbowMove 8s ease infinite; 
         }
 
-        #sw-display {
-            font-family: var(--font-mono);
-            font-size: 6rem;
-            font-weight: 700;
-            color: var(--text-bright);
-            margin: 20px 0;
-            text-shadow: 0 0 30px rgba(255,255,255,0.2);
-            font-variant-numeric: tabular-nums;
-        }
+        .grid li:nth-child(n) { animation-delay: calc(0.08s * var(--i, 0)); }
 
-        .sw-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .btn-ghost {
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-light);
-            color: #fff;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: var(--transition-fast);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--text-dim);
-        }
-
-        .lap-container {
-            max-height: 200px;
-            overflow-y: auto;
-            text-align: left;
-            font-family: var(--font-mono);
-            padding: 20px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 16px;
-        }
-
-        .lap-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        /* 
-        ========================================
-        10. GAME VIEW OVERLAY
-        ========================================
-        */
-        #game-overlay {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            z-index: 5000;
-            display: none;
-            flex-direction: column;
-        }
-
-        .game-header {
-            height: 60px;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .game-title {
-            font-family: var(--font-title);
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        #game-frame {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* 
-        ========================================
-        11. SEARCH SYSTEM
-        ========================================
-        */
-        .search-container {
-            max-width: 800px;
-            margin: 40px auto;
-            position: relative;
-        }
-
-        .search-bar {
-            width: 100%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            padding: 20px 30px;
-            border-radius: 100px;
-            color: #fff;
-            font-size: 1.1rem;
-            backdrop-filter: blur(20px);
-            transition: var(--transition-mid);
-        }
-
-        .search-bar:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 30px var(--primary-glow);
-            outline: none;
-            transform: scale(1.02);
-        }
-
-        /* 
-        ========================================
-        12. ANIMATIONS
-        ========================================
-        */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
-            100% { opacity: 0.8; transform: scale(1); }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* 
-        ========================================
-        13. RESPONSIVE DESIGN
-        ========================================
-        */
-        @media (max-width: 1024px) {
-            .home-layout { grid-template-columns: 1fr; }
-            .hero-title { font-size: 3rem; }
-        }
-
-        @media (max-width: 768px) {
-            .status-bar { padding: 0 15px; font-size: 0.6rem; }
-            .status-item.clock { display: none; }
-            .section-title { font-size: 3rem; }
-            .nav-btn { padding: 8px 15px; font-size: 0.7rem; }
-            #sw-display { font-size: 3.5rem; }
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; border: 2px solid #000; }
     </style>
 </head>
 <body oncontextmenu="return false;">
+    <!-- SYSTEM LAYERS -->
+    <div id="scanlines"></div>
+    <div id="glitch-overlay"></div>
+    <canvas id="particle-canvas"></canvas>
+    <canvas id="matrix-canvas"></canvas>
+    <div id="bg-canvas"></div>
 
-    <!-- SYSTEM LAYER -->
-    <div class="scanlines"></div>
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
+    <!-- AUDIO DRIVER -->
+    <audio id="sfx-click" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="sfx-hover" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <audio id="player" src="bg.mp3" loop></audio>
 
-    <div id="bg-container">
-        <canvas id="particle-canvas"></canvas>
-    </div>
-
-    <!-- LOADER -->
+    <!-- LOADING KERNEL -->
     <div id="loader">
-        <div class="loader-content">
-            <div class="loader-title">ULTRA HUB</div>
-            <div class="loader-bar-container">
-                <div id="loader-progress"></div>
-            </div>
-            <div class="loader-status" id="loader-status">Initializing Core...</div>
-        </div>
+        <div class="loader-logo">ZOCMYT & VRGAMER262 HUB</div>
+        <div class="load-bar"><div class="load-progress" id="load-p"></div></div>
+        <div style="font-size: 0.7rem; margin-top: 15px; opacity: 0.5; letter-spacing: 4px; font-weight: 900;">MOUNTING SYSTEM CORE...</div>
     </div>
 
-    <!-- AUDIO ASSETS (HIDDEN) -->
-    <audio id="sfx-hover" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" preload="auto"></audio>
-    <audio id="sfx-click" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
+    <!-- MOUSE KERNEL -->
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
 
-    <!-- TOP STATUS BAR -->
+    <!-- SYSTEM STATUS BAR -->
     <div class="status-bar">
-        <div class="status-item">
-            <div class="status-pill">SYS: <span>OPERATIONAL</span></div>
-            <div class="status-pill">FPS: <span id="fps-counter">60</span></div>
-        </div>
-        <div class="status-item clock">
-            <div id="current-date">MONDAY, JAN 01</div>
-            <div id="current-time" style="color: white; font-weight: 700;">12:00:00 PM</div>
-        </div>
-        <div class="status-item">
-            <div class="status-pill">UP: <span id="uptime-counter">00:00:00</span></div>
-            <div class="status-pill" id="battery-status">PWR: 100%</div>
+        <div id="greeting">Connecting...</div>
+        <div style="display:flex; gap:35px; align-items:center;">
+            <div id="auth-status" class="auth-badge" onclick="handleAuthClick()" style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer;">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                <span id="auth-text" style="font-weight: 800;">Authorize</span>
+            </div>
+            <div id="perf">FPS: 00 | NET: 00ms</div>
+            <div id="uptime">UP: 00:00:00</div>
+            <div id="clock">00:00:00 AM</div>
+            <div id="battery">PWR: 100%</div>
         </div>
     </div>
 
-    <!-- GLOBAL SEARCH -->
-    <div class="search-container">
-        <input type="text" class="search-bar" id="global-search" placeholder="Search games, tools, or commands... (Press '/')">
+    <!-- UNIVERSAL SEARCH -->
+    <div class="search-area">
+        <input type="text" id="universalSearch" placeholder="Search the Nexus... (Games, Tools, Apps)" onkeyup="universalSearch()">
     </div>
 
-    <!-- NAVIGATION -->
-    <nav class="main-nav">
-        <a href="#" class="nav-btn active" onclick="navigate('home', event)">Dashboard</a>
-        <a href="#" class="nav-btn" onclick="navigate('games', event)">Arcade</a>
-        <a href="#" class="nav-btn" onclick="navigate('apps', event)">Workbench</a>
-        <a href="#" class="nav-btn" onclick="navigate('tools', event)">Utilities</a>
-        <a href="#" class="nav-btn" onclick="navigate('terminal', event)">Console</a>
-        <a href="#" class="nav-btn" onclick="navigate('settings', event)">System</a>
-    </nav>
+    <!-- NAVIGATION MENU -->
+    <div class="nav-wrapper">
+        <ul class="nav">
+            <li><a onclick="showSec('home')" id="nav-home">Dashboard</a></li>
+            <li><a onclick="showSec('games')" id="nav-games">Games</a></li>
+            <li><a onclick="showSec('apps')" id="nav-apps">Workbench</a></li>
+            <li><a onclick="showSec('music')" id="nav-music">Media</a></li>
+            <li><a onclick="showSec('news')" id="nav-news">Changelog</a></li>
+            <li><a onclick="showSec('tools')" id="nav-tools">Toolkit</a></li>
+            <li><a onclick="showSec('terminal')" id="nav-terminal">Console</a></li>
+            <li><a onclick="showSec('models')" id="nav-models">3D Lab</a></li>
+            <li><a onclick="showSec('design')" id="nav-design">Settings</a></li>
+            <li><a onclick="showSec('profile')" id="nav-profile">Account</a></li>
+            <li><a onclick="showSec('about')" id="nav-about">Nexus Info</a></li>
+        </ul>
+    </div>
 
-    <!-- SECTIONS -->
-    
-    <!-- HOME SECTION -->
+    <!-- SEARCH RESULTS LAYER -->
+    <section id="results">
+        <h1>Global Results</h1>
+        <ul class="grid" id="results-list"></ul>
+    </section>
+
+    <!-- SECTION: HOME (EXPANDED) -->
     <section id="home" class="active">
-        <div class="home-layout">
-            <div class="hero-panel">
-                <div class="card-tag">System Version 10.04.1</div>
-                <h1 class="hero-title">Welcome back, Commander.</h1>
-                <p class="hero-text">Your unified nexus for high-performance web applications and curated gaming experiences is ready. Everything is synchronized and operational.</p>
-                <div class="btn-group">
-                    <button class="btn-primary" onclick="navigate('games')">Launch Game</button>
-                    <button class="btn-ghost" onclick="navigate('apps')">Open Tools</button>
+        <h1 class="rainbow-text">System Core</h1>
+        
+        <div class="dashboard-grid">
+            <div class="panel" style="margin:0; text-align: left; padding: 50px;">
+                <h3 style="margin-bottom: 25px;">Welcome to Ultra Hub</h3>
+                <p style="opacity:0.7; font-size: 1.1rem; line-height: 1.8;">Your unified environment for high-performance web experiences. Version 10.5 features an <strong>Atomic Synchronization Engine</strong> and enhanced visual kernels.</p>
+                <div style="display:flex; gap:15px; margin-top:35px;">
+                    <button class="btn" onclick="showSec('games')" style="padding: 18px 35px; font-size: 0.8rem;">Launch Game</button>
+                    <button class="btn" style="background:rgba(255,255,255,0.05); color:white; padding: 18px 35px; font-size: 0.8rem;" onclick="showSec('apps')">Open Workspace</button>
                 </div>
+            </div>
+            <div class="calendar-widget">
+                <div class="cal-header">
+                    <span id="cal-month">MONTH</span>
+                    <span id="cal-year">2026</span>
+                </div>
+                <div class="cal-grid" id="cal-grid">
+                    <div class="cal-day">S</div><div class="cal-day">M</div><div class="cal-day">T</div><div class="cal-day">W</div><div class="cal-day">T</div><div class="cal-day">F</div><div class="cal-day">S</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-row">
+            <div class="widget neon-border">
+                <span class="widget-label">System Integrity</span>
+                <div class="widget-val" id="sys-health">98.4%</div>
+                <div style="height:4px; background:rgba(255,255,255,0.05); border-radius:10px; margin-top:15px; overflow:hidden;">
+                    <div style="width:98%; height:100%; background:var(--primary); box-shadow: 0 0 15px var(--glow);"></div>
+                </div>
+            </div>
+            <div class="widget">
+                <span class="widget-label">Session Uptime</span>
+                <div class="widget-val" id="session-timer">00:00:00</div>
+            </div>
+            <div class="widget">
+                <span class="widget-label">Memory Usage</span>
+                <div class="widget-val" id="mem-val">62.1 MB</div>
+            </div>
+            <div class="widget">
+                <span class="widget-label">Network Load</span>
+                <div class="widget-val" id="net-val">8 kb/s</div>
+            </div>
+        </div>
+
+        <ul class="grid">
+            <li><a class="card" href="https://www.youtube.com/@zOcM" target="_blank"><span class="card-text">zOcM YouTube</span></a></li>
+            <li><a class="card" href="https://www.youtube.com/@VRGamer262" target="_blank"><span class="card-text">VRGamer262 YouTube</span></a></li>
+            <li><a class="card" href="https://github.com/VRGamer262Real" target="_blank"><span class="card-text">GitHub (VRGamer262)</span></a></li>
+            <li><a class="card" href="https://github.com/zOcMYT/" target="_blank"><span class="card-text">GitHub (zOcM)</span></a></li>
+        </ul>
+    </section>
+
+    <!-- SECTION: GAMES (RESTORED ALL TITLES) -->
+    <section id="games">
+        <h1>The Arcade</h1>
+        <ul class="grid">
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/polytrack/', 'Polytrack')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq4z0oIn1dnrq__vTuC1IthPoyEBUIpJx2tw&s"><span class="card-text">Polytrack</span></div></li>
+            <li><div class="card" onclick="openGame('https://supaclicker.vrgamer262.workers.dev/', 'Supa Clicker')"><img src="https://raw.githubusercontent.com/VRGamer262Real/supaclicker.github.io/refs/heads/main/ButtonIcon.png"><span class="card-text">Supa Clicker</span></div></li>
+            <li><div class="card" onclick="openGame('https://supaclickerhacked.vrgamer262.workers.dev/', 'Supa Clicker (Hacked)')"><img src="https://raw.githubusercontent.com/VRGamer262Real/supaclicker.github.io/refs/heads/main/ButtonIcon.png"><span class="card-text">Clicker (Hacked)</span></div></li>
+            <li><div class="card" onclick="openGame('https://tower-defense.vrgamer262.workers.dev/', 'Tower Defense')"><img src="https://raw.githubusercontent.com/VRGamer262Real/Hub/refs/heads/main/TD-Image.png"><span class="card-text">Tower Defense</span></div></li>
+            <li><div class="card" onclick="openGame('https://towerdefensehacked.vrgamer262.workers.dev/', 'Tower Defense (Hacked)')"><img src="https://raw.githubusercontent.com/VRGamer262Real/Hub/refs/heads/main/TD-Image.png"><span class="card-text">TD (Hacked)</span></div></li>
+            <li><div class="card" onclick="openGame('https://bbcr.vrgamer262.workers.dev/', 'Baldi Remaster')"><img src="https://m.gjcdn.net/game-header/950/602328-enyxuxkk-v4.jpg"><span class="card-text">Baldi Remaster</span></div></li>
+            <li><div class="card" onclick="openGame('https://melodixxx.github.io/reunbozdo.github.io/', 'Block Blast')"><img src="https://i.ytimg.com/vi/tjbh3cNpI9g/maxresdefault.jpg"><span class="card-text">Block Blast</span></div></li>
+            <li><div class="card" onclick="openGame('https://simon.lc/tetr.js/', 'Tetris')"><img src="https://play-lh.googleusercontent.com/w-lUGr-eaAwxLUl7OW5v7jLG-CE8H2Z75D6lkkm8Tro21ZLCk7fvVIjVM7ZG0u0ZLBws=w240-h480-rw"><span class="card-text">Tetris</span></div></li>
+            <li><div class="card" onclick="openGame('https://soteris24.github.io/genetrydash.github.io/', 'Geometry Dash')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCd8DHW4zOb9QqjJ59t9FpV8LnEeKwIttiaw&s"><span class="card-text">Geometry Dash</span></div></li>
+            <li><div class="card" onclick="openGame('https://8ballpool.vrgamer262.workers.dev/', '8Ball Pool')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkQDXxj4nWBG57shuWLgrAZalDrnAF-CINBQ&s"><span class="card-text">8Ball Pool</span></div></li>
+            <li><div class="card" onclick="openGame('https://snowrider3d.vrgamer262.workers.dev/', 'Snow Rider 3D')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7HUapu5amnY5nfYojuBTCRQBThbOGsPKl_Q&s"><span class="card-text">Snow Rider 3D</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/paperio2/', 'Paper.io 2')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbOYDL-XogArpPn5yhnKk4E0pRDmWTIRXnxA&s"><span class="card-text">Paper.io 2</span></div></li>
+            <li><div class="card" onclick="openGame('https://30obriewhit.github.io/drive-mad/', 'Drive Mad')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS978Fp0DG45horfcROMLIbcBrNSrHrzpTEpw&s"><span class="card-text">Drive Mad</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/slopegithub.io/', 'Slope')"><img src="https://slopeonlinegame.github.io/data/image/options/slope-game-unblocked-76-banner.jpg"><span class="card-text">Slope</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/tube-jumpers/', 'Tube Jumpers')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrRUxFpC2DxuSdDpblsfSVLjduLqvzH5jVdg&s"><span class="card-text">Tube Jumpers</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/pac-man-2/', 'PanMan 2')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNLZvtt71RKK-qtH3aOkGdy4mq2eF874psqQ&s"><span class="card-text">PacMan 2</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/google-snake/', 'Snake')"><img src="https://imgs.search.brave.com/1IyfbUXm7HXvdd1aU3M7J0KZK1yG4bytZv-D19AL-lc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c3BlZWRydW4u/Y29t/L3N0YXRpYy9nYW1l/L28xeTlweWs2L2Nv/dmVyLnBuZz92PWY0/NTYyZmY"><span class="card-text">Snake</span></div></li>
+            <li><div class="card" onclick="openGame('https://cyberpunk-tank.vercel.app/', 'CyberPunk Tank')"><img src="https://imgs.search.brave.com/dUlfvnyVDET4V50tRhqCGarxvAXdcRUICLWP2HHVO1U/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/dHJ1ZWFjaGlldmVt/ZW50cy5jb20vZ2Ft/ZWltYWdlLzI2MDE2/NF8wLmpwZw"><span class="card-text">CyberPunk Tank</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/ragdoll-hit/', 'Ragdoll Hit')"><img src="https://imgs.search.brave.com/jt0gBA2AiD_HUlzVd0pj5z4uY2yCsyQ2SHBK5OWSIbk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9yYWdk/b2xsaGl0LWdhbWUu/aW8vZGF0YS9pbWFn/ZS9nYW1lL3JhZ2Rv/bGwtaGl0LW9ubGlu/ZS5wbmc"><span class="card-text">Ragdoll Hit</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/territorial.io/', 'Territorial.io')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpaJ_2vBueQc_fMJhCXx3JFuBf-pALbA3m_A&s"><span class="card-text">Territorial.io</span></div></li>
+            <li><div class="card" onclick="openGame('https://vrgamer262real.github.io/FNAF2/', 'FNAF 2')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQENAseWNj0BP2F45sfFwyz1DsfAUbf4U7YNg&s"><span class="card-text">FNAF 2</span></div></li>
+        </ul>
+    </section>
+
+    <!-- SECTION: APPS (FIXED STOPWATCH) -->
+    <section id="apps">
+        <h1>Workbench</h1>
+        <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="panel" style="margin:0;">
+                <h3>Atomic Stopwatch</h3>
+                <div id="sw-display" style="font-size: 5rem; margin: 25px 0; font-family: var(--font-mono); color: var(--primary); text-shadow: 0 0 20px var(--primary-glow);">00:00:00.000</div>
+                <div style="display:flex; gap:20px; justify-content:center;">
+                    <button class="btn" id="sw-start" onclick="swStart()">Engage</button>
+                    <button class="btn" style="background:rgba(255,255,255,0.05); color:white" onclick="swReset()">Wipe</button>
+                    <button class="btn" style="background:var(--secondary); color:white" onclick="swLap()">Lap</button>
+                </div>
+                <div id="sw-laps" style="margin-top:25px; max-height:150px; overflow-y:auto; text-align:left; font-family:var(--font-mono); font-size:0.8rem; border-top:1px solid var(--border); padding-top:15px;"></div>
             </div>
             
-            <div class="stats-sidebar">
-                <div class="stat-widget">
-                    <span class="stat-label">Weather Forecast</span>
-                    <div class="stat-value" id="weather-sim">24°C Sunny</div>
-                    <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 5px;">San Francisco, CA</div>
-                </div>
-                <div class="stat-widget">
-                    <span class="stat-label">Daily Objectives</span>
-                    <div class="task-list">
-                        <div class="task-item"><input type="checkbox" checked> Check system updates</div>
-                        <div class="task-item"><input type="checkbox"> Beat Polytrack high score</div>
-                        <div class="task-item"><input type="checkbox"> Backup cloud registry</div>
-                    </div>
-                </div>
-                <div class="stat-widget">
-                    <span class="stat-label">Network Load</span>
-                    <div class="stat-value" id="net-load">1.2 MB/s</div>
-                    <div style="height:4px; background:rgba(255,255,255,0.05); margin-top:10px; border-radius:10px;">
-                        <div style="width:35%; height:100%; background:var(--primary); box-shadow: 0 0 10px var(--primary);"></div>
-                    </div>
+            <div class="panel" style="margin:0;">
+                <h3>Focus Pomodoro</h3>
+                <div id="pomo-display" style="font-size: 5rem; margin: 25px 0; font-family: var(--font-mono); color: var(--success);">25:00</div>
+                <div style="display:flex; gap:15px; justify-content:center;">
+                    <button class="btn" onclick="startPomo(25)">Focus</button>
+                    <button class="btn" style="background:var(--secondary); color: white;" onclick="startPomo(5)">Break</button>
+                    <button class="btn" style="background:rgba(255,255,255,0.05); color:white" onclick="resetPomo()">Reset</button>
                 </div>
             </div>
         </div>
 
-        <div class="section-header">
-            <h2 class="section-title">Quick Access</h2>
-            <p class="section-subtitle">Pinned Repositories</p>
+        <div class="panel">
+            <h3>Hub Task Manager</h3>
+            <div id="task-list" style="margin-bottom: 20px; text-align: left;"></div>
+            <div style="display:flex; gap:15px;">
+                <input type="text" id="new-task-input" placeholder="New objective..." style="margin:0; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; padding: 15px; border-radius: 15px; flex: 1;">
+                <button class="btn" style="padding: 15px 30px; font-size: 0.8rem;" onclick="addTask()">Add Task</button>
+            </div>
         </div>
 
-        <div class="grid-container">
-            <a href="https://github.com/VRGamer262Real" target="_blank" class="card">
-                <div class="card-tag">Developer</div>
-                <h3 class="card-title">VRGamer262 Docs</h3>
-                <p class="card-desc">Official documentation and source code for the Ultra Hub project.</p>
-            </a>
-            <a href="https://github.com/zOcMYT/" target="_blank" class="card">
-                <div class="card-tag">Collaboration</div>
-                <h3 class="card-title">zOcM Repository</h3>
-                <p class="card-desc">Main core components and UI framework modules.</p>
-            </a>
-            <div class="card" onclick="navigate('tools')">
-                <div class="card-tag">Utility</div>
-                <h3 class="card-title">System Toolkit</h3>
-                <p class="card-desc">Access encoders, decoders, and security tools instantly.</p>
-            </div>
+        <div class="panel">
+            <h3>Cloud Registry (Notes)</h3>
+            <textarea id="note" rows="8" placeholder="Begin typing system logs..." onkeyup="localStorage.setItem('hubNote', this.value)" style="background: rgba(0,0,0,0.3); color: white; border: 1px solid var(--border); border-radius: 20px; padding: 20px; width: 100%; font-family: var(--font-mono);"></textarea>
+            <button class="btn" style="margin-top:20px;" onclick="downloadNotes()">Export Archive (.txt)</button>
         </div>
     </section>
 
-    <!-- GAMES SECTION -->
-    <section id="games">
-        <div class="section-header">
-            <h2 class="section-title">The Arcade</h2>
-            <p class="section-subtitle">Latency-Optimized Gaming</p>
-        </div>
-
-        <div class="grid-container" id="games-grid">
-            <!-- Legacy Games Restored -->
-            <div class="card" onclick="launchGame('https://vrgamer262real.github.io/polytrack/', 'Polytrack')">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq4z0oIn1dnrq__vTuC1IthPoyEBUIpJx2tw&s" class="card-img">
-                <div class="card-tag">Racing</div>
-                <h3 class="card-title">Polytrack</h3>
-                <p class="card-desc">High-speed low-poly racing simulation with custom tracks.</p>
-            </div>
-            <div class="card" onclick="launchGame('https://supaclicker.vrgamer262.workers.dev/', 'Supa Clicker')">
-                <img src="https://raw.githubusercontent.com/VRGamer262Real/supaclicker.github.io/refs/heads/main/ButtonIcon.png" class="card-img">
-                <div class="card-tag">Idle</div>
-                <h3 class="card-title">Supa Clicker</h3>
-                <p class="card-desc">Infinite progression clicking engine by VRGamer262.</p>
-            </div>
-            <div class="card" onclick="launchGame('https://tower-defense.vrgamer262.workers.dev/', 'Tower Defense')">
-                <img src="https://raw.githubusercontent.com/VRGamer262Real/Hub/refs/heads/main/TD-Image.png" class="card-img">
-                <div class="card-tag">Strategy</div>
-                <h3 class="card-title">Tower Defense</h3>
-                <p class="card-desc">Defend your core against waves of digital anomalies.</p>
-            </div>
-            <div class="card" onclick="launchGame('https://simon.lc/tetr.js/', 'Tetris')">
-                <img src="https://play-lh.googleusercontent.com/w-lUGr-eaAwxLUl7OW5v7jLG-CE8H2Z75D6lkkm8Tro21ZLCk7fvVIjVM7ZG0u0ZLBws=w240-h480-rw" class="card-img">
-                <div class="card-tag">Classic</div>
-                <h3 class="card-title">TETR.JS</h3>
-                <p class="card-desc">The ultimate browser-based competitive Tetris experience.</p>
-            </div>
-            <div class="card" onclick="launchGame('https://soteris24.github.io/genetrydash.github.io/', 'Geometry Dash')">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCd8DHW4zOb9QqjJ59t9FpV8LnEeKwIttiaw&s" class="card-img">
-                <div class="card-tag">Rhythm</div>
-                <h3 class="card-title">Geometry Dash</h3>
-                <p class="card-desc">Jump and fly your way through danger in this rhythm-based platformer.</p>
-            </div>
-            <div class="card" onclick="launchGame('https://8ballpool.vrgamer262.workers.dev/', '8Ball Pool')">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkQDXxj4nWBG57shuWLgrAZalDrnAF-CINBQ&s" class="card-img">
-                <div class="card-tag">Sports</div>
-                <h3 class="card-title">8Ball Pool</h3>
-                <p class="card-desc">Competitive online billiards with realistic physics.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- APPS SECTION (FIXED STOPWATCH) -->
-    <section id="apps">
-        <div class="section-header">
-            <h2 class="section-title">Workbench</h2>
-            <p class="section-subtitle">Core Productivity Tools</p>
-        </div>
-
-        <div class="utility-panel">
-            <div class="card-tag">Atomic Timing Module</div>
-            <div id="sw-display">00:00:00.000</div>
-            <div class="sw-controls">
-                <button class="btn-primary" id="sw-toggle" onclick="stopwatch.toggle()">Start Engine</button>
-                <button class="btn-ghost" onclick="stopwatch.lap()">Capture Lap</button>
-                <button class="btn-ghost" style="color: var(--danger);" onclick="stopwatch.reset()">Purge Data</button>
-            </div>
-            <div class="lap-container" id="lap-list">
-                <div style="color: var(--text-dim); text-align: center;">No telemetry data recorded.</div>
-            </div>
-        </div>
-
-        <div class="grid-container">
-            <div class="card">
-                <h3 class="card-title">Cloud Notepad</h3>
-                <textarea id="system-notes" placeholder="Buffer input..." style="width:100%; height:150px; background:rgba(0,0,0,0.3); border:1px solid var(--border-light); border-radius:12px; color:white; padding:15px; font-family:var(--font-mono); margin-top:15px; resize:none;"></textarea>
-                <button class="btn-ghost" style="margin-top:15px;" onclick="saveNotes()">Commit to LocalStorage</button>
-            </div>
-            <div class="card">
-                <h3 class="card-title">Focus Timer</h3>
-                <div id="pomo-clock" style="font-size:3rem; font-family:var(--font-mono); margin:20px 0; text-align:center; color:var(--success);">25:00</div>
-                <div class="btn-group" style="justify-content:center;">
-                    <button class="btn-ghost" onclick="startPomo(25)">Focus</button>
-                    <button class="btn-ghost" onclick="startPomo(5)">Break</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TOOLS SECTION -->
+    <!-- SECTION: TOOLS -->
     <section id="tools">
-        <div class="section-header">
-            <h2 class="section-title">Utilities</h2>
-            <p class="section-subtitle">Cryptographic & System Tools</p>
-        </div>
-
-        <div class="grid-container">
-            <div class="card">
-                <h3 class="card-title">Password Forge</h3>
-                <p class="card-desc">Generate entropy-rich secure keys.</p>
-                <div id="pass-out" style="font-family:var(--font-mono); color:var(--primary); margin:15px 0; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; font-size:0.8rem; overflow:hidden;">********</div>
-                <button class="btn-primary" onclick="generatePassword()">Forge Key</button>
-            </div>
-            <div class="card">
-                <h3 class="card-title">Morse Encoder</h3>
-                <p class="card-desc">Convert text to signal pulses.</p>
-                <input type="text" id="morse-in" placeholder="Enter text..." style="width:100%; background:rgba(0,0,0,0.2); border:1px solid var(--border-light); padding:10px; border-radius:8px; color:white; margin:15px 0;">
-                <div id="morse-out" style="font-family:var(--font-mono); color:var(--warning); font-size:0.7rem; word-break:break-all;">... --- ...</div>
-            </div>
-            <div class="card">
-                <h3 class="card-title">Base64 Transcoder</h3>
-                <p class="card-desc">Encode/Decode binary strings.</p>
-                <button class="btn-ghost" style="margin-top:20px;" onclick="base64Tool()">Run Transcoder</button>
-            </div>
+        <h1>Toolkit</h1>
+        <ul class="grid">
+            <li><div class="card" onclick="genPass()"><span class="card-text">Secret Key Gen</span></div></li>
+            <li><div class="card" onclick="showMorse()"><span class="card-text">Signal Encoder</span></div></li>
+            <li><div class="card" onclick="copySystemInfo()"><span class="card-text">Manifest Copy</span></div></li>
+            <li><div class="card" onclick="execCmd('b64')"><span class="card-text">B64 Transcoder</span></div></li>
+            <li><a class="card" href="https://dc.vrgamer262.workers.dev/"><span class="card-text">Decode Counter</span></a></li>
+        </ul>
+        <div id="tool-out" style="text-align:center; margin-top: 50px; font-size: 1.5rem; font-weight: 900; color: var(--primary); font-family: var(--font-mono); min-height: 2em;"></div>
+        
+        <div id="morse-panel" class="panel" style="display:none;">
+            <h3>Morse Translator</h3>
+            <input type="text" id="morse-input" placeholder="Text to Morse..." oninput="translateMorse()" style="background:rgba(255,255,255,0.05); color:white; border:1px solid var(--border); padding:15px; border-radius:15px; width:100%;">
+            <h2 id="morse-result" style="color:var(--primary); word-break: break-all; font-family: var(--font-mono); margin-top:20px;">.... ..</h2>
         </div>
     </section>
 
-    <!-- CONSOLE / TERMINAL SECTION -->
+    <!-- SECTION: TERMINAL -->
     <section id="terminal">
-        <div class="section-header">
-            <h2 class="section-title">System Console</h2>
-            <p class="section-subtitle">Direct Kernel Access</p>
-        </div>
-        <div style="background:#000; border:1px solid var(--primary); border-radius:12px; padding:20px; font-family:var(--font-mono); font-size:0.9rem; color:var(--success); box-shadow:0 0 40px rgba(0,255,136,0.1);">
-            <div id="terminal-log" style="height:400px; overflow-y:auto; margin-bottom:15px;">
-                <div>[SYSTEM] Booting UltraHub Terminal v10.0...</div>
-                <div>[SYSTEM] Handshake with remote repository successful.</div>
-                <div>[SYSTEM] Type 'help' for available commands.</div>
+        <h1>System Console</h1>
+        <div class="panel">
+            <div class="terminal-box" id="terminal-display">
+                <div>[SYSTEM] Booting Hub OS Kernel v10.5.2...</div>
+                <div>[SYSTEM] Memory Segment: OK | Gfx Pipeline: ACTIVE</div>
+                <div>[SYSTEM] Type 'help' for nexus commands.</div>
             </div>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <span style="color:var(--primary);">root@ultrahub:~#</span>
-                <input type="text" id="terminal-input" style="flex:1; background:transparent; border:none; color:white; font-family:inherit; outline:none;" autofocus>
+            <div style="display:flex; gap:10px; align-items:center; margin-top: 20px;">
+                <span style="color: var(--success); font-weight: 900; font-family: var(--font-mono);">root@ultrahub:~#</span>
+                <input type="text" id="term-input" onkeyup="handleTerminal(event)" style="flex:1; background:transparent; border:none; color:white; font-family:var(--font-mono); outline:none;">
             </div>
         </div>
     </section>
 
-    <!-- SETTINGS SECTION -->
-    <section id="settings">
-        <div class="section-header">
-            <h2 class="section-title">Preferences</h2>
-            <p class="section-subtitle">Personalize your environment</p>
-        </div>
-        <div class="grid-container">
-            <div class="card">
-                <h3 class="card-title">Visual Theme</h3>
-                <p class="card-desc">Change the global aesthetic.</p>
-                <select id="theme-select" onchange="changeTheme(this.value)" style="width:100%; padding:12px; background:#1a1a1a; color:white; border-radius:8px; margin-top:15px; border:1px solid var(--border-light);">
-                    <option value="cyber">Cyber Cyan (Default)</option>
-                    <option value="neon">Neon Magenta</option>
-                    <option value="matrix">Matrix Green</option>
-                </select>
+    <!-- SECTION: 3D MODELS -->
+    <section id="models">
+        <h1>3D Forge</h1>
+        <ul class="grid">
+            <li><a class="card" href="https://makerworld.com/en/models/1804813-locking-bottlenose-bcar" target="_blank"><span class="card-text">Locking BCAR</span></a></li>
+            <li><a class="card" href="https://makerworld.com/en/models/2444418-nail-form-roll-holder" target="_blank"><span class="card-text">Nail Form Holder</span></a></li>
+            <li><a class="card" href="https://makerworld.com/en/models/2444354-starlink-gen-3-mounts" target="_blank"><span class="card-text">Starlink Mounts</span></a></li>
+        </ul>
+    </section>
+
+    <!-- SECTION: PROFILE -->
+    <section id="profile">
+        <h1>Identity</h1>
+        <div class="panel" id="profile-container">
+            <div id="logged-out-view">
+                <h3>Unauthorized Access</h3>
+                <p style="opacity:0.6; margin-bottom:30px;">Initialize GitHub handshake to synchronize registry data.</p>
+                <button class="btn" onclick="handleAuthClick()">Connect GitHub</button>
             </div>
-            <div class="card">
-                <h3 class="card-title">Background FX</h3>
-                <p class="card-desc">Toggle particle engine performance.</p>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-                    <span>Meme Particles</span>
-                    <input type="checkbox" checked id="particle-toggle">
+            <div id="logged-in-view" style="display:none;">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:20px;">
+                    <img id="user-avatar" src="" style="width:120px; height:120px; border-radius:50%; border:3px solid var(--primary); box-shadow: 0 0 30px var(--primary-glow);">
+                    <h2 id="user-name" style="font-family: var(--font-display);"></h2>
+                    <p id="user-bio" style="opacity:0.6; font-size: 0.9rem;"></p>
+                    <button class="btn" style="background:var(--accent); color:white;" onclick="logout()">Terminate Session</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- GAME OVERLAY -->
-    <div id="game-overlay">
-        <div class="game-header">
-            <div class="game-title" id="active-game-title">LOADING ENGINE...</div>
-            <button class="btn-ghost" style="color:var(--accent); border-color:var(--accent);" onclick="closeGame()">TERMINATE SESSION</button>
+    <!-- SECTION: ABOUT -->
+    <section id="about">
+        <h1>Nexus Creators</h1>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:40px;">
+            <div class="panel">
+                <p style="font-size: 1.1rem; line-height: 1.8;">The Hub was architected by <strong>VRGamer262</strong> and <strong>zOcM</strong> to create a seamless, high-performance portal for our custom game engines and developer utilities.</p>
+            </div>
+            <div style="display:flex; gap:40px; flex-wrap:wrap; justify-content:center;">
+                <div style="text-align:center;">
+                    <img src="https://raw.githubusercontent.com/VRGamer262Real/Hub/refs/heads/main/VRGamer262.jpg" style="width:280px; border-radius:50px; border:3px solid var(--primary); box-shadow: 0 0 40px var(--glow);">
+                    <p style="font-weight:900; margin-top:20px; font-size: 1.2rem;">VRGamer262</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="https://raw.githubusercontent.com/VRGamer262Real/Hub/refs/heads/main/900-900.jpeg" style="width:280px; border-radius:50px; border:3px solid var(--primary); box-shadow: 0 0 40px var(--glow);">
+                    <p style="font-weight:900; margin-top:20px; font-size: 1.2rem;">zOcM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAME THEATER MODAL -->
+    <div id="game-view">
+        <div class="game-bar">
+            <div style="display:flex; flex-direction:column;">
+                <div id="active-game-name" style="font-weight:900; color:var(--primary); text-transform:uppercase; letter-spacing:3px;">SYSTEM_PROCESS.EXE</div>
+                <div style="font-size: 0.6rem; opacity: 0.5; letter-spacing: 2px;">ENCRYPTED PROXY ACTIVE</div>
+            </div>
+            <div style="display:flex; gap:15px;">
+                <button class="game-btn" onclick="document.getElementById('game-frame').contentWindow.location.reload()">Reload</button>
+                <button class="game-btn" onclick="window.open(document.getElementById('game-frame').src, '_blank')">Pop Out</button>
+                <button class="game-btn" style="background:var(--accent); border:none;" onclick="closeGame()">Terminate</button>
+            </div>
         </div>
         <iframe id="game-frame" src="about:blank"></iframe>
     </div>
 
-    <!-- 
-    ========================================
-    14. SYSTEM CORE JAVASCRIPT
-    ========================================
-    -->
+    <!-- SYSTEM CORE JAVASCRIPT -->
     <script>
         /* 
-        ----------------------------------------
-        A. SYSTEM INITIALIZATION & STATE
-        ----------------------------------------
+        ------------------------------------------------------------------------
+        A. KERNEL INITIALIZATION & STATE
+        ------------------------------------------------------------------------
         */
-        const SystemState = {
-            version: '10.0.4',
-            startTime: Date.now(),
-            isMuted: false,
-            activeSection: 'home',
-            isParticlesEnabled: true,
-            theme: 'cyber',
-            memes: [
+        const System = {
+            start: Date.now(),
+            isPerfMode: false,
+            currentUser: JSON.parse(localStorage.getItem('hubUser')) || null,
+            memeLib: [
                 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGY4ZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/vFKqnCdLPNOKc/giphy.gif',
                 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGY4ZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/13CoXDiaCcC2EA/giphy.gif',
                 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGY4ZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/mlvsekSZHmR3O/giphy.gif',
                 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGY4ZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3oriO0OEdcEzKibQD6/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGY4ZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/10vXUikS7iI6S4/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3RkZG5ndnZzbm9uNnN5eXN5eXN5eXN5eXN5eXN5eXN5eXN5eXN5eXN5ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VbnUQpnihPSIgIX2HE/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGRhc3BkYXNwdGRhc3B0ZGFzcHREYXNwdGRhc3B0ZGFzcHREYXNwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/k3P1HSUneeFeM/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3RkZ3Jlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cuPm4A4pBdwZ2/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3RkeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/B7M1hhOdYW4i4/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3RkeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jpbnoe3UIa8TUBSAXB/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGRhc3BkYXNwdGRhc3B0ZGFzcHREYXNwdGRhc3B0ZGFzcHREYXNwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/S9369jWnC38I/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGRhc3BkYXNwdGRhc3B0ZGFzcHREYXNwdGRhc3B0ZGFzcHREYXNwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lTfuxV3XF846Y0/giphy.gif',
-                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGRhc3BkYXNwdGRhc3B0ZGFzcHREYXNwdGRhc3B0ZGFzcHREYXNwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/f6V500vMpxQyS8e9Zf/giphy.gif'
-            ]
-        };
-
-        const elements = {
-            loader: document.getElementById('loader'),
-            loaderProgress: document.getElementById('loader-progress'),
-            loaderStatus: document.getElementById('loader-status'),
-            cursorDot: document.getElementById('cursor-dot'),
-            cursorRing: document.getElementById('cursor-ring'),
-            clockTime: document.getElementById('current-time'),
-            clockDate: document.getElementById('current-date'),
-            uptime: document.getElementById('uptime-counter'),
-            fps: document.getElementById('fps-counter'),
-            particleCanvas: document.getElementById('particle-canvas'),
-            sections: document.querySelectorAll('section'),
-            navBtns: document.querySelectorAll('.nav-btn'),
-            swDisplay: document.getElementById('sw-display'),
-            swToggle: document.getElementById('sw-toggle'),
-            lapList: document.getElementById('lap-list'),
-            gameOverlay: document.getElementById('game-overlay'),
-            gameFrame: document.getElementById('game-frame'),
-            gameTitle: document.getElementById('active-game-title'),
-            search: document.getElementById('global-search'),
-            terminalInput: document.getElementById('terminal-input'),
-            terminalLog: document.getElementById('terminal-log')
+                'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGY4ZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqZzFqJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/10vXUikS7iI6S4/giphy.gif'
+            ],
+            loadedMemes: []
         };
 
         /* 
-        ----------------------------------------
-        B. LOADER LOGIC
-        ----------------------------------------
+        ------------------------------------------------------------------------
+        B. MEME PARTICLE ENGINE (CLASS-BASED)
+        ------------------------------------------------------------------------
         */
-        function initLoader() {
-            let progress = 0;
-            const steps = [
-                "Binding Shaders...",
-                "Mounting Arcade...",
-                "Calibrating Atomic Clock...",
-                "Injecting Meme Particles...",
-                "Syncing User Profile...",
-                "Finalizing Handshake..."
-            ];
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
-            const interval = setInterval(() => {
-                progress += Math.floor(Math.random() * 5) + 2;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    setTimeout(hideLoader, 500);
-                }
-                elements.loaderProgress.style.width = progress + '%';
-                elements.loaderStatus.innerText = steps[Math.floor(progress / (100 / steps.length))] || "READY";
-            }, 50);
-        }
-
-        function hideLoader() {
-            elements.loader.style.opacity = '0';
-            setTimeout(() => {
-                elements.loader.style.visibility = 'hidden';
-            }, 1000);
-        }
-
-        /* 
-        ----------------------------------------
-        C. MOUSE & CURSOR SYSTEM
-        ----------------------------------------
-        */
-        function initCursor() {
-            window.addEventListener('mousemove', (e) => {
-                elements.cursorDot.style.left = e.clientX + 'px';
-                elements.cursorDot.style.top = e.clientY + 'px';
-                
-                // Ring follow with lag
-                elements.cursorRing.animate({
-                    left: (e.clientX - 20) + 'px',
-                    top: (e.clientY - 20) + 'px'
-                }, { duration: 500, fill: "forwards" });
-            });
-
-            document.querySelectorAll('a, button, .card, input, select').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
-            });
-        }
-
-        /* 
-        ----------------------------------------
-        D. MEME PARTICLE ENGINE
-        ----------------------------------------
-        */
-        class Particle {
-            constructor(canvas) {
-                this.canvas = canvas;
-                this.ctx = canvas.getContext('2d');
-                this.reset();
-            }
-
-            reset() {
-                this.x = Math.random() * this.canvas.width;
-                this.y = Math.random() * this.canvas.height;
-                this.size = Math.random() * 60 + 40;
-                this.speedX = (Math.random() - 0.5) * 1.5;
-                this.speedY = (Math.random() - 0.5) * 1.5;
-                this.rotation = Math.random() * Math.PI * 2;
-                this.rotSpeed = (Math.random() - 0.5) * 0.02;
-                this.opacity = Math.random() * 0.4 + 0.1;
-                
+        function preLoadMemes() {
+            System.memeLib.forEach(src => {
                 const img = new Image();
-                img.src = SystemState.memes[Math.floor(Math.random() * SystemState.memes.length)];
-                this.img = img;
-            }
+                img.src = src;
+                System.loadedMemes.push(img);
+            });
+        }
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.rotation += this.rotSpeed;
-
-                if (this.x < -100) this.x = this.canvas.width + 100;
-                if (this.x > this.canvas.width + 100) this.x = -100;
-                if (this.y < -100) this.y = this.canvas.height + 100;
-                if (this.y > this.canvas.height + 100) this.y = -100;
-            }
-
-            draw() {
-                this.ctx.save();
-                this.ctx.translate(this.x, this.y);
-                this.ctx.rotate(this.rotation);
-                this.ctx.globalAlpha = this.opacity;
-                this.ctx.drawImage(this.img, -this.size/2, -this.size/2, this.size, this.size);
-                this.ctx.restore();
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0; i < 35; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5,
+                    size: 45 + Math.random() * 60,
+                    img: System.loadedMemes[Math.floor(Math.random() * System.loadedMemes.length)],
+                    rot: Math.random() * Math.PI * 2,
+                    vRot: (Math.random() - 0.5) * 0.02,
+                    opacity: 0.3 + Math.random() * 0.3
+                });
             }
         }
 
-        const particleEngine = {
-            instances: [],
-            init() {
-                elements.particleCanvas.width = window.innerWidth;
-                elements.particleCanvas.height = window.innerHeight;
-                for (let i = 0; i < 45; i++) {
-                    this.instances.push(new Particle(elements.particleCanvas));
-                }
-                this.animate();
-            },
-            animate() {
-                const ctx = elements.particleCanvas.getContext('2d');
-                ctx.clearRect(0, 0, elements.particleCanvas.width, elements.particleCanvas.height);
+        function drawParticles() {
+            if(System.isPerfMode) return;
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                p.rot += p.vRot;
+                if(p.x < -p.size || p.x > canvas.width + p.size) p.vx *= -1;
+                if(p.y < -p.size || p.y > canvas.height + p.size) p.vy *= -1;
                 
-                if (document.getElementById('particle-toggle').checked) {
-                    this.instances.forEach(p => {
-                        p.update();
-                        p.draw();
-                    });
-                }
-                requestAnimationFrame(() => this.animate());
-            }
-        };
-
-        /* 
-        ----------------------------------------
-        E. ATOMIC STOPWATCH SYSTEM (FIXED)
-        ----------------------------------------
-        */
-        const stopwatch = {
-            startTime: 0,
-            elapsed: 0,
-            timer: null,
-            isRunning: false,
-            laps: [],
-
-            toggle() {
-                if (this.isRunning) {
-                    this.stop();
-                } else {
-                    this.start();
-                }
-            },
-
-            start() {
-                this.isRunning = true;
-                this.startTime = performance.now() - this.elapsed;
-                this.timer = requestAnimationFrame(this.update.bind(this));
-                elements.swToggle.innerText = "Stop Telemetry";
-                elements.swToggle.style.background = "var(--accent)";
-            },
-
-            stop() {
-                this.isRunning = false;
-                cancelAnimationFrame(this.timer);
-                elements.swToggle.innerText = "Resume Engine";
-                elements.swToggle.style.background = "var(--primary)";
-            },
-
-            reset() {
-                this.stop();
-                this.elapsed = 0;
-                this.laps = [];
-                this.updateDisplay(0);
-                elements.lapList.innerHTML = '<div style="color: var(--text-dim); text-align: center;">No telemetry data recorded.</div>';
-                elements.swToggle.innerText = "Start Engine";
-            },
-
-            update(now) {
-                if (!this.isRunning) return;
-                this.elapsed = now - this.startTime;
-                this.updateDisplay(this.elapsed);
-                this.timer = requestAnimationFrame(this.update.bind(this));
-            },
-
-            updateDisplay(ms) {
-                const hours = Math.floor(ms / 3600000);
-                const minutes = Math.floor((ms % 3600000) / 60000);
-                const seconds = Math.floor((ms % 60000) / 1000);
-                const centis = Math.floor((ms % 1000));
-                
-                elements.swDisplay.innerText = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${centis.toString().padStart(3, '0')}`;
-            },
-
-            lap() {
-                if (this.elapsed === 0) return;
-                this.laps.push(this.elapsed);
-                const lapDiv = document.createElement('div');
-                lapDiv.className = 'lap-item';
-                lapDiv.innerHTML = `<span>LAP ${this.laps.length}</span> <span>${elements.swDisplay.innerText}</span>`;
-                
-                if (this.laps.length === 1) elements.lapList.innerHTML = '';
-                elements.lapList.prepend(lapDiv);
-            }
-        };
-
-        /* 
-        ----------------------------------------
-        F. NAVIGATION & ROUTING
-        ----------------------------------------
-        */
-        function navigate(sectionId, event) {
-            if (event) event.preventDefault();
-            
-            // Play SFX
-            document.getElementById('sfx-click').play().catch(()=>{});
-
-            // Update UI
-            elements.sections.forEach(s => s.classList.remove('active'));
-            elements.navBtns.forEach(b => b.classList.remove('active'));
-            
-            const target = document.getElementById(sectionId);
-            if (target) {
-                target.classList.add('active');
-                SystemState.activeSection = sectionId;
-            }
-
-            const activeBtn = Array.from(elements.navBtns).find(b => b.innerText.toLowerCase() === sectionId || (sectionId === 'home' && b.innerText === 'Dashboard'));
-            if (activeBtn) activeBtn.classList.add('active');
-
-            window.scrollTo(0, 0);
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rot);
+                ctx.globalAlpha = p.opacity;
+                ctx.drawImage(p.img, -p.size/2, -p.size/2, p.size, p.size);
+                ctx.restore();
+            });
+            requestAnimationFrame(drawParticles);
         }
 
         /* 
-        ----------------------------------------
-        G. ARCADE ENGINE
-        ----------------------------------------
+        ------------------------------------------------------------------------
+        C. ATOMIC STOPWATCH (HIGH-PRECISION ENGINE)
+        ------------------------------------------------------------------------
         */
-        function launchGame(url, title) {
-            elements.gameTitle.innerText = title.toUpperCase();
-            elements.gameFrame.src = url;
-            elements.gameOverlay.style.display = 'flex';
+        let swRunning = false;
+        let swStartTime = 0;
+        let swElapsedTime = 0;
+        let swInterval;
+        let laps = [];
+
+        function swStart() {
+            const btn = document.getElementById('sw-start');
+            if (!swRunning) {
+                swRunning = true;
+                swStartTime = performance.now() - swElapsedTime;
+                swInterval = requestAnimationFrame(swUpdate);
+                btn.innerText = "Halt";
+                btn.style.background = "var(--accent)";
+            } else {
+                swRunning = false;
+                cancelAnimationFrame(swInterval);
+                btn.innerText = "Engage";
+                btn.style.background = "var(--primary)";
+            }
+        }
+
+        function swUpdate() {
+            if (!swRunning) return;
+            swElapsedTime = performance.now() - swStartTime;
+            document.getElementById('sw-display').innerText = formatAtomicTime(swElapsedTime);
+            swInterval = requestAnimationFrame(swUpdate);
+        }
+
+        function swReset() {
+            swRunning = false;
+            cancelAnimationFrame(swInterval);
+            swElapsedTime = 0;
+            laps = [];
+            document.getElementById('sw-display').innerText = "00:00:00.000";
+            document.getElementById('sw-laps').innerHTML = "";
+            document.getElementById('sw-start').innerText = "Engage";
+            document.getElementById('sw-start').style.background = "var(--primary)";
+        }
+
+        function swLap() {
+            if (swElapsedTime === 0) return;
+            laps.unshift(swElapsedTime);
+            const container = document.getElementById('sw-laps');
+            container.innerHTML = laps.map((l, i) => `<div style="padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">[MARK ${laps.length - i}] ${formatAtomicTime(l)}</div>`).join('');
+        }
+
+        function formatAtomicTime(ms) {
+            let h = Math.floor(ms / 3600000);
+            let m = Math.floor((ms % 3600000) / 60000);
+            let s = Math.floor((ms % 60000) / 1000);
+            let mil = Math.floor(ms % 1000);
+            return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}.${mil.toString().padStart(3,'0')}`;
+        }
+
+        /* 
+        ------------------------------------------------------------------------
+        D. UI HANDLERS & NAVIGATION
+        ------------------------------------------------------------------------
+        */
+        function showSec(id) {
+            playSfx('click');
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+            const n = document.getElementById('nav-'+id);
+            if(n) n.classList.add('active');
+            window.scrollTo(0,0);
+            refreshCards();
+        }
+
+        function openGame(url, name) {
+            document.getElementById('active-game-name').innerText = name.toUpperCase();
+            const view = document.getElementById('game-view');
+            view.classList.add('active');
+            document.getElementById('game-frame').src = url;
             document.body.style.overflow = 'hidden';
-            document.getElementById('sfx-click').play().catch(()=>{});
         }
 
         function closeGame() {
-            elements.gameOverlay.style.display = 'none';
-            elements.gameFrame.src = 'about:blank';
+            const view = document.getElementById('game-view');
+            view.classList.remove('active');
+            document.getElementById('game-frame').src = 'about:blank';
             document.body.style.overflow = 'auto';
         }
 
+        function playSfx(id) {
+            const s = document.getElementById('sfx-' + id);
+            if(s) { s.currentTime = 0; s.volume = 0.2; s.play().catch(()=>{}); }
+        }
+
         /* 
-        ----------------------------------------
-        H. UTILITY FUNCTIONS
-        ----------------------------------------
+        ------------------------------------------------------------------------
+        E. SYSTEM TASKS & LOGIC
+        ------------------------------------------------------------------------
         */
-        function generatePassword() {
-            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-            let retVal = "";
-            for (let i = 0; i < 16; ++i) {
-                retVal += charset.charAt(Math.floor(Math.random() * charset.length));
-            }
-            document.getElementById('pass-out').innerText = retVal;
+        let tasks = JSON.parse(localStorage.getItem('hubTasks')) || [{t: "Synchronize System Kernel", c: true}, {t: "Explore Arcade", c: false}];
+        
+        function addTask() {
+            const input = document.getElementById('new-task-input');
+            if(!input.value) return;
+            tasks.push({t: input.value, c: false});
+            input.value = ""; 
+            saveTasks(); 
+            renderTasks();
         }
 
-        function base64Tool() {
-            const input = prompt("Enter string to encode/decode:");
-            if (!input) return;
-            try {
-                const choice = confirm("OK to ENCODE, Cancel to DECODE");
-                const result = choice ? btoa(input) : atob(input);
-                alert("Result: " + result);
-            } catch(e) {
-                alert("Transcoding error: " + e.message);
-            }
+        function toggleTask(i) { 
+            tasks[i].c = !tasks[i].c; 
+            saveTasks(); 
+            renderTasks(); 
         }
 
+        function saveTasks() { 
+            localStorage.setItem('hubTasks', JSON.stringify(tasks)); 
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('task-list');
+            list.innerHTML = tasks.map((t, i) => `
+                <div style="display:flex; align-items:center; gap:15px; background:rgba(255,255,255,0.03); padding:15px; border-radius:15px; margin-bottom:10px;">
+                    <input type="checkbox" ${t.c ? 'checked' : ''} onclick="toggleTask(${i})" style="width:20px; height:20px;">
+                    <span style="${t.c ? 'text-decoration:line-through; opacity:0.4' : ''}">${t.t}</span>
+                </div>
+            `).join('');
+        }
+
+        function genPass() {
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+            let pass = "";
+            for(let i=0; i<16; i++) pass += chars.charAt(Math.floor(Math.random()*chars.length));
+            document.getElementById('tool-out').innerText = "SECURE KEY: " + pass;
+        }
+
+        function copySystemInfo() {
+            const info = `HUB OS v10.5 | PLATFORM: ${navigator.platform} | AGENT: ${navigator.userAgent}`;
+            navigator.clipboard.writeText(info).then(() => {
+                document.getElementById('tool-out').innerText = "MANIFEST COPIED TO BUFFER";
+            });
+        }
+
+        /* 
+        ------------------------------------------------------------------------
+        F. POMODORO ENGINE
+        ------------------------------------------------------------------------
+        */
+        let pomoInterval;
         function startPomo(mins) {
-            let seconds = mins * 60;
-            const display = document.getElementById('pomo-clock');
-            
-            if (window.pomoInterval) clearInterval(window.pomoInterval);
-            
-            window.pomoInterval = setInterval(() => {
-                const m = Math.floor(seconds / 60);
-                const s = seconds % 60;
-                display.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                
-                if (seconds <= 0) {
-                    clearInterval(window.pomoInterval);
-                    alert("Focus session complete!");
-                }
-                seconds--;
+            clearInterval(pomoInterval);
+            let time = mins * 60;
+            pomoInterval = setInterval(() => {
+                let m = Math.floor(time / 60);
+                let s = time % 60;
+                document.getElementById('pomo-display').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+                if(time <= 0) { clearInterval(pomoInterval); alert("Module Sequence Complete."); }
+                time--;
             }, 1000);
         }
+        function resetPomo() { clearInterval(pomoInterval); document.getElementById('pomo-display').innerText = "25:00"; }
 
-        function saveNotes() {
-            const txt = document.getElementById('system-notes').value;
-            localStorage.setItem('hub_notes', txt);
-            alert("Notes committed to encrypted local storage.");
+        /* 
+        ------------------------------------------------------------------------
+        G. TERMINAL ENGINE
+        ------------------------------------------------------------------------
+        */
+        function handleTerminal(e) {
+            if(e.key === 'Enter') {
+                const input = document.getElementById('term-input');
+                const val = input.value.trim().toLowerCase();
+                const display = document.getElementById('terminal-display');
+                
+                const line = document.createElement('div');
+                line.innerHTML = `<span style="color:#fff">> ${input.value}</span>`;
+                display.appendChild(line);
+
+                let output = "";
+                if(val === 'help') output = "AVAILABLE: clear, date, whoami, status, reboot, matrix";
+                else if(val === 'clear') { display.innerHTML = ""; output = "Console flushed."; }
+                else if(val === 'date') output = new Date().toString();
+                else if(val === 'status') output = "Kernel: OK. Mem: 64MB. UI: Optimized.";
+                else if(val === 'reboot') location.reload();
+                else if(val === 'matrix') { toggleMatrix(); output = "Matrix Visualizer Active."; }
+                else output = "Kernel Error: Command sequence not recognized.";
+
+                const res = document.createElement('div');
+                res.innerText = "[HUB] " + output;
+                display.appendChild(res);
+                
+                input.value = "";
+                display.scrollTop = display.scrollHeight;
+            }
         }
 
         /* 
-        ----------------------------------------
-        I. SYSTEM LOOP (CLOCK / STATS)
-        ----------------------------------------
+        ------------------------------------------------------------------------
+        H. MATRIX VISUALIZER
+        ------------------------------------------------------------------------
         */
-        let lastFrameTime = performance.now();
+        const mCanvas = document.getElementById('matrix-canvas');
+        const mCtx = mCanvas.getContext('2d');
+        let mLetters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        mLetters = mLetters.split("");
+        let mFontSize = 15;
+        let mColumns, mDrops = [];
+        let isMatrix = false;
+
+        function initMatrix() {
+            mCanvas.width = window.innerWidth;
+            mCanvas.height = window.innerHeight;
+            mColumns = mCanvas.width / mFontSize;
+            mDrops = [];
+            for (let i = 0; i < mColumns; i++) mDrops[i] = 1;
+        }
+
+        function drawMatrix() {
+            if(!isMatrix) return;
+            mCtx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+            mCtx.fillStyle = "#0F0";
+            mCtx.font = mFontSize + "px monospace";
+            for (let i = 0; i < mDrops.length; i++) {
+                let text = mLetters[Math.floor(Math.random() * mLetters.length)];
+                mCtx.fillText(text, i * mFontSize, mDrops[i] * mFontSize);
+                if (mDrops[i] * mFontSize > mCanvas.height && Math.random() > 0.975) mDrops[i] = 0;
+                mDrops[i]++;
+            }
+            requestAnimationFrame(drawMatrix);
+        }
+
+        function toggleMatrix() {
+            isMatrix = !isMatrix;
+            mCanvas.style.opacity = isMatrix ? "1" : "0";
+            if(isMatrix) { initMatrix(); drawMatrix(); }
+        }
+
+        /* 
+        ------------------------------------------------------------------------
+        I. SYSTEM MONITOR & BOOT
+        ------------------------------------------------------------------------
+        */
         let frameCount = 0;
+        let lastPerfUpdate = performance.now();
 
-        function updateSystem() {
-            const now = new Date();
-            
-            // Clock
-            elements.clockTime.innerText = now.toLocaleTimeString();
-            elements.clockDate.innerText = now.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' }).toUpperCase();
-            
-            // Uptime
-            const upDiff = Date.now() - SystemState.startTime;
-            const h = Math.floor(upDiff / 3600000);
-            const m = Math.floor((upDiff % 3600000) / 60000);
-            const s = Math.floor((upDiff % 60000) / 1000);
-            elements.uptime.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-
-            // FPS Counter
-            const frameNow = performance.now();
+        function systemLoop() {
+            const now = performance.now();
             frameCount++;
-            if (frameNow - lastFrameTime >= 1000) {
-                elements.fps.innerText = frameCount;
+            
+            if (now - lastPerfUpdate >= 1000) {
+                document.getElementById('perf').innerText = `FPS: ${frameCount} | NET: ${Math.floor(Math.random()*15+5)}ms`;
                 frameCount = 0;
-                lastFrameTime = frameNow;
-                
-                // Simulate Net Load
-                document.getElementById('net-load').innerText = (Math.random() * 2 + 0.1).toFixed(1) + " MB/s";
+                lastPerfUpdate = now;
+                // Sim load
+                document.getElementById('net-val').innerText = Math.floor(Math.random()*20) + " kb/s";
+                if(performance.memory) document.getElementById('mem-val').innerText = Math.round(performance.memory.usedJSHeapSize / 1048576) + " MB";
             }
-
-            requestAnimationFrame(updateSystem);
-        }
-
-        /* 
-        ----------------------------------------
-        J. TERMINAL LOGIC
-        ----------------------------------------
-        */
-        elements.terminalInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const cmd = elements.terminalInput.value.trim().toLowerCase();
-                const log = document.createElement('div');
-                log.innerHTML = `<span style="color:var(--primary);">root@ultrahub:~#</span> ${cmd}`;
-                elements.terminalLog.appendChild(log);
-                
-                processCommand(cmd);
-                
-                elements.terminalInput.value = '';
-                elements.terminalLog.scrollTop = elements.terminalLog.scrollHeight;
-            }
-        });
-
-        function processCommand(cmd) {
-            const out = document.createElement('div');
-            out.style.color = "#888";
             
-            switch(cmd) {
-                case 'help':
-                    out.innerHTML = "Available commands: clear, help, whoami, version, status, reboot, logout, theme [name]";
-                    break;
-                case 'clear':
-                    elements.terminalLog.innerHTML = '';
-                    return;
-                case 'whoami':
-                    out.innerText = "Authorized User: Administrator | Access Level: 10";
-                    break;
-                case 'version':
-                    out.innerText = "UltraHub OS Core Version " + SystemState.version;
-                    break;
-                case 'status':
-                    out.innerText = "All systems green. Kernel load 0.04. Memory usage 128MB.";
-                    break;
-                case 'reboot':
-                    location.reload();
-                    break;
-                default:
-                    if (cmd.startsWith('theme ')) {
-                        const t = cmd.split(' ')[1];
-                        changeTheme(t);
-                        out.innerText = "Applied theme: " + t;
-                    } else {
-                        out.innerText = "Command not found: " + cmd;
-                    }
-            }
-            elements.terminalLog.appendChild(out);
+            const upS = Math.floor((Date.now() - System.start) / 1000);
+            const fmt = `${Math.floor(upS/3600).toString().padStart(2,'0')}:${Math.floor((upS%3600)/60).toString().padStart(2,'0')}:${(upS%60).toString().padStart(2,'0')}`;
+            document.getElementById('uptime').innerText = `UP: ${fmt}`;
+            document.getElementById('session-timer').innerText = fmt;
+            
+            requestAnimationFrame(systemLoop);
         }
 
-        function changeTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            SystemState.theme = theme;
+        function initCalendar() {
+            const now = new Date();
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('cal-month').innerText = months[now.getMonth()].toUpperCase();
+            document.getElementById('cal-year').innerText = now.getFullYear();
+            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+            const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+            const grid = document.getElementById('cal-grid');
+            for(let i=0; i<firstDay; i++) grid.innerHTML += `<div class="cal-num" style="opacity:0;"></div>`;
+            for(let d=1; d<=daysInMonth; d++) {
+                const isToday = d === now.getDate() ? "today" : "";
+                grid.innerHTML += `<div class="cal-num ${isToday}">${d}</div>`;
+            }
         }
 
-        /* 
-        ----------------------------------------
-        K. SEARCH LOGIC
-        ----------------------------------------
-        */
-        elements.search.addEventListener('keyup', () => {
-            const query = elements.search.value.toLowerCase();
-            if (query.length < 2) {
-                document.querySelectorAll('.card').forEach(c => c.style.display = 'flex');
-                return;
-            }
-
-            document.querySelectorAll('.card').forEach(card => {
-                const title = card.querySelector('.card-title')?.innerText.toLowerCase() || '';
-                const desc = card.querySelector('.card-desc')?.innerText.toLowerCase() || '';
-                if (title.includes(query) || desc.includes(query)) {
-                    card.style.display = 'flex';
-                    card.style.borderColor = 'var(--primary)';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-
-        // Global key shortcut for search
-        window.addEventListener('keydown', (e) => {
-            if (e.key === '/' && document.activeElement !== elements.search && document.activeElement !== elements.terminalInput) {
-                e.preventDefault();
-                elements.search.focus();
-            }
-        });
-
-        /* 
-        ----------------------------------------
-        L. FINAL BOOT SEQUENCE
-        ----------------------------------------
-        */
         window.onload = () => {
-            initLoader();
-            initCursor();
-            particleEngine.init();
-            updateSystem();
+            preLoadMemes();
+            initParticles();
+            drawParticles();
+            initCalendar();
+            systemLoop();
+            renderTasks();
+            syncAuthUI();
             
-            // Load saved notes
-            const saved = localStorage.getItem('hub_notes');
-            if (saved) document.getElementById('system-notes').value = saved;
-            
-            console.log("%cULTRA HUB OS LOADED", "color: #00f2ff; font-size: 20px; font-weight: bold;");
+            let p = 0;
+            const loaderInt = setInterval(() => {
+                p += Math.random() * 25;
+                document.getElementById('load-p').style.width = Math.min(p, 100) + "%";
+                if(p >= 100) {
+                    clearInterval(loaderInt);
+                    document.getElementById('loader').style.transform = "translateY(-100%)";
+                    document.getElementById('greeting').innerText = "SYSTEMS NOMINAL";
+                }
+            }, 150);
+            refreshCards();
         };
 
-        // Battery Monitor Simulation
-        navigator.getBattery?.().then(battery => {
-            function updateBattery() {
-                elements.batteryStatus.innerText = `PWR: ${Math.round(battery.level * 100)}%`;
+        /* 
+        ------------------------------------------------------------------------
+        J. UTILITIES & AUTH
+        ------------------------------------------------------------------------
+        */
+        function universalSearch() {
+            const q = document.getElementById('universalSearch').value.toLowerCase();
+            const res = document.getElementById('results-list');
+            if(q === "") { showSec('home'); return; }
+            showSec('results'); 
+            res.innerHTML = "";
+            document.querySelectorAll('section:not(#results) .card').forEach(i => {
+                if(i.innerText.toLowerCase().includes(q)) {
+                    let li = i.parentElement.cloneNode(true);
+                    li.onclick = i.parentElement.onclick;
+                    res.appendChild(li);
+                }
+            });
+            refreshCards();
+        }
+
+        function handleAuthClick() {
+            if(System.currentUser) showSec('profile');
+            else {
+                const name = prompt("Enter Nexus ID (Username):");
+                if(name) {
+                    System.currentUser = { username: name, avatar: `https://github.com/${name}.png`, bio: "Ultra Hub Contributor" };
+                    localStorage.setItem('hubUser', JSON.stringify(System.currentUser));
+                    syncAuthUI();
+                }
             }
-            updateBattery();
-            battery.addEventListener('levelchange', updateBattery);
+        }
+
+        function syncAuthUI() {
+            const text = document.getElementById('auth-text');
+            if(System.currentUser) {
+                text.innerText = System.currentUser.username;
+                document.getElementById('user-avatar').src = System.currentUser.avatar;
+                document.getElementById('user-name').innerText = System.currentUser.username;
+                document.getElementById('user-bio').innerText = System.currentUser.bio;
+                document.getElementById('logged-out-view').style.display = 'none';
+                document.getElementById('logged-in-view').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            System.currentUser = null;
+            localStorage.removeItem('hubUser');
+            location.reload();
+        }
+
+        function refreshCards() {
+            document.querySelectorAll('a, button, .card').forEach(el => {
+                el.onmouseenter = () => { playSfx('hover'); document.body.classList.add('cursor-hover'); };
+                el.onmouseleave = () => { document.body.classList.remove('cursor-hover'); };
+            });
+        }
+
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+            if(navigator.getBattery) navigator.getBattery().then(b => document.getElementById('battery').innerText = `PWR: ${Math.floor(b.level*100)}%`);
+        }, 1000);
+
+        // Anti-Close Protection
+        window.onbeforeunload = () => "Kernel Data Sync in progress. Terminate Session?";
+
+        document.addEventListener('mousemove', (e) => {
+            document.getElementById('cursor').style.left = e.clientX + 'px';
+            document.getElementById('cursor').style.top = e.clientY + 'px';
+            document.getElementById('cursor-follower').style.transform = `translate(${e.clientX - 22}px, ${e.clientY - 22}px)`;
         });
 
     </script>
